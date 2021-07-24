@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset Link for  {{ domain }}</title>
+    <style>
+        body {
+            padding: 50px 0;
+        }
+
+        .immu-btn {
+            background-color: #51b4a9;
+            color: #ffffff;
+            border-style: solid;
+            border-width: 0;
+            border-radius: 4px;
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .immu-btn:hover {
+            background-color: #333333
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Hello {{ user }},</h3>
+    <p>You're receiving this email because you requested a password reset for your user account at {{domain}}. Please click this "RESET PASSWORD" button below. It will redirect you to the password reset page on {{domain}} and choose a new password there:</p><br><br><br>
+    <a class="immu-btn" href="http://{{domain}}{%url 'password_reset_confirm' uidb64=uid  token=token %}">Reset Password</a><br><br><br>
+    <p>Your username, in case you've forgotten: {{ username }}</p>
+    <br><br>
+    <p>Thanks for using our site!<br><br>
+    Kindest regards<br>
+    Nzube Mekah<br>
+    Founder Of {{ domain }}.</p>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Already Activate{% endblock %}
+{% block content %}
+<section class="py-5 my-5">
+    <div class="container py-5">
+        <div class="alert alert-success" role="alert">
+            <p class="text-center">
+                This user is already activate. Thanks for your confirmation.
+            </p>
+        </div>
+        <p class="text-center">If you forgot your password please <a style="color: red;" href="{% url 'passReste' %}">Reaset password</a>.</p>
+    </div>
+</section>
+{% endblock %}

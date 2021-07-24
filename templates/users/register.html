@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Regiater{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/register/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="card py-5 ps-5 pe-5">
+            <p class="pb-0 fs-3 text-center">Create a new account</p>
+            <form action="{% url 'register' %}" method="POST" novalidate {% if form.errors %}class="was-validated"
+                {% endif %}>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    <p class="text-center">
+                        {{ message }}
+                    </p>
+                </div>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}.
+                <div class="alert alert-danger" role="alert">
+                    <p class="text-center">
+                        {{ message }}
+                    </p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {{ form.subscription_pack }}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-floating pb-3">
+                            {{ form.firstName }}
+                            <label class="form-label">{{ form.firstName.label }}</label>
+                            {{ form.firstName.errors }}
+                        </div>
+
+                        <div class="form-floating pb-3">
+                            {{ form.lastName }}
+                            <label class="form-label">{{ form.lastName.label }}</label>
+                            {{ form.lastName.errors }}
+                        </div>
+
+                        <div class="form-floating pb-3">
+                            {{ form.email }}
+                            <label class="form-label">{{ form.email.label }}</label>
+                            {{ form.email.errors }}
+                            <div id="emailHelp" class="form-text">{{ form.email.help_text }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-floating pb-3">
+                            {{ form.userName }}
+                            <label class="form-label">{{ form.userName.label }}</label>
+                            {{ form.userName.errors }}
+                        </div>
+
+                        <div class="form-floating pb-3">
+                            {{ form.password }}
+                            <label class="form-label">{{ form.password.label }}</label>
+                            {{ form.password.errors }}
+                        </div>
+
+                        <div class="form-floating pb-3">
+                            {{ form.confirmPassword }}
+                            <label class="form-label">{{ form.confirmPassword.label }}</label>
+                            {{ form.confirmPassword.errors }}
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn immu-btn text-uppercase">Register</button>
+                    <p class="mt-5">Already have an account? <a href="{% url 'login' %}"
+                            class="text-decoration-none">Please
+                            login.</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

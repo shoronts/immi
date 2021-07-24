@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search{% endblock %}
+
+{% block css %}
+<style>
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .errorlist {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control {
+        border: 2px solid #333333;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border: 2px solid #51B4A9;
+    }
+    .all-post-images {
+        height: 200px;
+        width: auto;
+    }
+
+    .all-post-images img {
+        height: 100%;
+        width: 100%;
+    }
+    .card-body .card-text.text-justify{
+        height: 170px;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .btn-group a button{
+        width: 80px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        <div class="{% if not search_content %}my-5 py-5{% endif %}">
+            <form class="d-flex" method="POST" action="{% url 'search' %}" novalidate {% if form.errors %}class="was-validated"
+            {% endif %}>
+                {% csrf_token %}
+                {{ search.non_fiels_errors }}
+                {{ search.search }}
+                <button class="btn immu-btn" type="submit">Search</button>
+            </form>
+            {{ search.search.errors }}
+        </div>
+    </div>
+</section>
+
+{% if search_content %}
+    <section class="pb-5">
+        <div class="container pb-5">
+            <h1 class="text-center">
+                You are searching by:
+            </h1>
+            <p class="text-center fs-5 search-element"><q>{{ search_content }}</q></p>
+        </div>
+
+        <div class="container">
+            {% if search_datas %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for post in search_datas %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="all-post-images flex-shrink-0">
+                            <img src="{{ post.post_images.url }}" alt="{{ post.title }}">
+                        </div>
+    
+                        <div class="card-body">
+                            <p class="fs-4">{{ post.snippet_title }}</p>
+                            <p class="card-text text-justify">{{ post.snippet }}</p>
+                            <div class="d-flex justify-content-between align-items-center my-3">
+                                <p class="mb-0">Author:{{ post.user }}</p>
+                                <p class="mb-0">Comments:{{ post.forum_comments.count }}</p>
+                                <p class="mb-0">Likes:{{ post.total_likes }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a href="{% url 'every-single-post' pk=post.id slug=post.post_url %}" target="_blank">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    </a>
+                                </div>
+                                <small class="text-muted">{{ post.post_date }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <p class="text-center py-5 mb-5" style="color: red;">Nothing Found by <q>{{ search_content }}</q></p>
+            {% endif %}
+        </div>
+    </section>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}" role="alert">
+            <p class="text-center mb-0">
+                {{ message }}
+            </p>
+        </div>        
+        {% endfor %}
+        {% endif %}
+        <h1 class="text-center py-5">
+            Your are {{ user.userinfo.user_type }}.
+        </h1>
+    </div>
+</section>
+{% endblock %}

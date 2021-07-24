@@ -1,0 +1,104 @@
+/* Common CSS */
+.immu-btn {
+    background-color: #51b4a9;
+    color: #ffffff;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+.btn-primary:hover {
+    background-color: #51b4a9;
+    border-color: #51b4a9;
+}
+
+/* Header CSS */
+header{
+    background-color: #ffffff;
+}
+.menu-active {
+    background-color: #51b4a9 !important;
+    color: #ffffff;
+}
+
+.menu ul,
+.dashboard-menu ul {
+    margin-top: none;
+    margin-bottom: 0 !important;
+}
+
+.dashboard-menu ul a {
+    text-decoration: none;
+    color: #51b4a9;
+    font-size: 18px;
+}
+
+.dashboard-menu ul a:hover {
+    color: #333333;
+}
+
+.dashboard-menu-active {
+    color: #333333 !important;
+}
+
+.dashboard-menu ul a li {
+    list-style: none;
+    padding-right: 25px;
+}
+
+.dropdown .dropdown-menu li {
+    padding-right: 0;
+}
+
+.menu-profile-pic{
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+}
+
+.menu-profile-pic img{
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.user-profile-dropdown {
+    right: 0!important;
+}
+
+/* Footer CSS */
+footer{
+    background-color: #ffffff;
+}
+footer a {
+    color: #333333;
+}
+
+.text-decoration-none:hover {
+    color: #51b4a9 !important
+}
+
+.list-group li {
+    list-style: none;
+    padding: 5px
+}
+
+.footer-first-section {
+    width: 250px;
+}
+
+.bottom-bar {
+    background-color: #51b4a9;
+    color: #fff
+}
+
+.bottom-bar a:hover {
+    color: #333333 !important;
+}
+
+/* Global Body */
+
+body{
+    background-color: #F0F2F5;
+}

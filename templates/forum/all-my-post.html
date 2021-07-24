@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Forums By {{ user.username }} {% endblock %}
+
+{% block css %}
+<style>
+    .all-post-images {
+        height: 200px;
+        width: auto;
+    }
+
+    .all-post-images img {
+        height: 100%;
+        width: 100%;
+    }
+    .card-body .card-text.text-justify{
+        height: 170px;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .btn-group a button{
+        width: 80px;
+    }
+
+    .btn-group a:nth-child(3) button:hover {
+        background-color: red;
+        border: 1px solid red;
+    }
+
+    .btn-group a:nth-child(2) button:hover {
+        background-color: green;
+        border: 1px solid green;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="alert alert-success" role="alert">
+            <p class="text-center mb-0">
+                {{ message }}
+            </p>
+        </div>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}.
+        <div class="alert alert-danger" role="alert">
+            <p class="text-center mb-0">
+                {{ message }}
+            </p>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <p class="text-center fs-1">All Blogs Created By {{ user.first_name }}</p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for post in current_post %}
+            {% if post.user == user.username %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="all-post-images flex-shrink-0">
+                        <img src="{{ post.post_images.url }}" alt="{{ post.title }}">
+                    </div>
+
+                    <div class="card-body">
+                        <p class="fs-4">{{ post.snippet_title }}</p>
+                        <p class="card-text text-justify">{{ post.snippet }}</p>
+                        <div class="d-flex justify-content-between align-items-center my-3">
+                            <p class="mb-0">Author:{{ post.user }}</p>
+                            <p class="mb-0">Comments:{{ post.forum_comments.count }}</p>
+                            <p class="mb-0">Likes:{{ post.total_likes }}</p>
+                        </div>
+                        <p>Date: <small class="text-muted">{{ post.post_date }}</small></p>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'every-single-post' pk=post.id slug=post.post_url %}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                </a>
+                                <a class="ms-5 me-5" href="{% url 'edit-single-post' pk=post.id slug=post.post_url %}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </a>
+                                <a href="{% url 'delete-single-post' pk=post.id slug=post.post_url %}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Reset Password{% endblock %}
+
+{% block css %}
+<style>
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .errorlist {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control:focus {
+        border: 2px solid #51b4a9 !important;
+        box-shadow: none
+    }
+
+    .form-control {
+        border: 2px solid #ced4da
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card py-5 ps-5 pe-5">
+                    <p class="text-center fs-3">Reset Password</p>
+                    <form action="{% url 'password_reset_confirm' uidb64=uidb token=token %}" method="POST" novalidate
+                        {% if form.errors %}class="was-validated" {% endif %}>
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="form-floating mb-3">
+                            {{ form.password }}
+                            <label for="floatingInput">{{ form.password.label }}</label>
+                            {{ form.password.errors }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.confirmPassword }}
+                            <label for="floatingInput">{{ form.confirmPassword.label }}</label>
+                            {{ form.confirmPassword.errors }}
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn immu-btn text-uppercase">reset password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

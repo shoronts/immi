@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Posts{% endblock %}
+
+{% block css %}
+<style>
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .errorlist {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control {
+        border: 2px solid #333333;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border: 2px solid #51B4A9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        <form action="{% url 'create-forum-post' %}" method="POST" novalidate {% if form.errors %}class="was-validated"
+            {% endif %} enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success" role="alert">
+                <p class="text-center mb-0">
+                    {{ message }}
+                </p>
+            </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}.
+            <div class="alert alert-danger" role="alert">
+                <p class="text-center mb-0">
+                    {{ message }}
+                </p>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <div class="form-floating mb-3">
+                {{ form.title }}
+                <label for="floatingInput">Post Title</label>
+                {{ form.title.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Featured Images</label>
+                {{ form.post_images }}
+                {{ form.post_images.errors }}
+            </div>
+
+            <div class="form-floating">
+                {{ form.post_discription }}
+                <label for="floatingTextarea2">Post Descriptions (maximum 1500 character)</label>
+                {{ form.post_discription.errors }}
+            </div>
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn immu-btn">Create A Post</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

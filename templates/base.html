@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrapcss/bootstrap.min.css' %}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <!-- Other CSS -->
+    {% block css %}{% endblock %}
+
+    <!-- title and Favicon Icon -->
+    <title>IMMI | {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+
+</head>
+
+<body>
+    <header class="py-1">
+        <div class="container">
+            <nav class="d-flex justify-content-between align-items-center">
+                <div class="logo">
+                    <a href="{% url 'home' %}" class="text-decoration-none">
+                        <h1>IMMI</h1>
+                    </a>
+                </div>
+
+                {% if user.is_authenticated %}
+                <div class="dashboard-menu">
+                    <ul class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'dashboard' %}">
+                            <li
+                                class="{% if request.resolver_match.url_name == 'dashboard' %}dashboard-menu-active{% endif %}">
+                                Dashboard</li>
+                        </a>
+                        {% if user.userinfo.user_type != 'Current Student' %}
+                        <a href="{% url 'task' %}">
+                            <li
+                                class="{% if request.resolver_match.url_name == 'task' %}dashboard-menu-active{% endif %}">
+                                Task</li>
+                        </a>
+                        {% endif %}
+
+                        <div class="dropdown" style="margin-right: 25px;">
+                            <a class="btn dropdown-toggle p-0" href="#" role="button" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Forums
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'search' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'search' %}">Search</a>
+                                </li>
+                                
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'forum' %}dashboard-menu-active{% endif %}"
+                                                href="{% url 'forum' %}">All Posts</a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'create-forum-post' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'create-forum-post' %}">Create A Post</a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'all-post-user' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'all-post-user' %}">All My Posts</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="{% url 'immigration' %}">
+                            <li
+                                class="{% if request.resolver_match.url_name == 'immigration' %}dashboard-menu-active{% endif %}">
+                                Immigration</li>
+                        </a>
+                        <a href="{% url 'accommodation' %}">
+                            <li
+                                class="{% if request.resolver_match.url_name == 'accommodation' %}dashboard-menu-active{% endif %}">
+                                Accommodation</li>
+                        </a>
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="menu">
+                    <ul class="d-flex justify-content-between align-items-center">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown dashboard-menu">
+                            <a class="btn dropdown-toggle d-flex align-items-center p-0" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="menu-profile-pic me-3">
+                                    <img src="{{ user.userinfo.profilepic.url }}" alt="">
+                                </div>
+                                {{ user.first_name }} {{ user.last_name }}
+                            </a>
+
+                            <ul class="dropdown-menu user-profile-dropdown" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'profile' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'change_password' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'change_password' %}">Change Password</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {% if request.resolver_match.url_name == 'logout' %}dashboard-menu-active{% endif %}"
+                                        href="{% url 'logout' %}">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'register' %}" class="rounded text-decoration-none">
+                            <li
+                                class="list-group-item btn btn-primary {% if request.resolver_match.url_name == 'register' %} menu-active{% endif %}">
+                                Register</li>
+                        </a>
+                        <a href="{% url 'login' %}" class="ms-3 rounded text-decoration-none">
+                            <li
+                                class="list-group-item btn btn-primary {% if request.resolver_match.url_name == 'login' %} menu-active{% endif %}">
+                                Login</li>
+                        </a>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Global Body Start -->
+    {% block content %}{% endblock %}
+    <!-- Global Body Ends -->
+
+    <!-- Footer Starts -->
+    <footer>
+        <div class="container py-3">
+            <div class="d-lg-flex justify-content-between">
+                <div class="footer-first-section my-5">
+                    <!-- <img src="{% static 'img/logo.png' %}" alt="Footer Logo"> -->
+                    <h1>Footer Logo</h1>
+                    <p class="fs-6 mt-3" style="text-align: justify;">Lorem, ipsum dolor sit amet consectetur
+                        adipisicing elit. Nisi ipsum commodi reprehenderit tenetur impedit.</p>
+                </div>
+                <div class="footer-sceond-section my-5">
+                    <h4>Services</h4>
+                    <ul class="list-group mt-4">
+                        <li><a href="{% url 'forum' %}" class="text-decoration-none">Forum</a></li>
+                        <li><a href="#" class="text-decoration-none">Task</a></li>
+                        <li><a href="{% url 'accommodation' %}" class="text-decoration-none">Accommodation</a></li>
+                        <li><a href="{% url 'immigration' %}" class="text-decoration-none">Immigration</a></li>
+                    </ul>
+                </div>
+                <div class="footer-third-section my-5">
+                    <h4>Quick Link</h4>
+                    <ul class="list-group mt-4">
+                        <li><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" class="text-decoration-none">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}" class="text-decoration-none">Login</a></li>
+                        {% endif %}
+                        <li><a href="" class="text-decoration-none">Privacy
+                                Policy</a></li>
+                        <li><a href="" class="text-decoration-none">Terms &
+                                Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-fourth-section my-5">
+                    <h4>Contact Us</h4>
+                    <ul class="list-group mt-4">
+                        <li><a href="#" class="text-decoration-none">Phone: +(408)-xxx-xxx</a></li>
+                        <li><a href="mailto:emailandemail@gmail.com" class="text-decoration-none">Email:
+                                emailandemail@gmail.com</a></li>
+                        <li><a href="#" class="text-decoration-none">Location: USA, TX</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <section class="bottom-bar">
+        <div class="container py-3">
+            <p class="text-center mb-0">
+                Copyright &copy;
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>. All rights reserved by
+                <a class="text-decoration-none text-white" href="{% url 'home' %}">immu.com</a>
+                | Powered by <i class="icon-heart color-danger" aria-hidden="true"></i> <a
+                    class="text-decoration-none text-white" href="https://squaretechit.com" target="_blank">Square Tech
+                    IT</a>
+            </p>
+        </div>
+    </section>
+    <!-- Footer End -->
+
+    <!-- Optional JavaScript; Bootstrap Bundle with Popper! -->
+    <script src="{% static 'js/bootstrapjs/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Other JS -->
+    {% block js %}{% endblock %}
+    <script>
+        window.addEventListener("DOMContentLoaded", (e) => {
+            // Stop Inspect Element
+            document.onkeydown = function (o) {
+                return 123 != e.keyCode && ((!o.ctrlKey || !o.shiftKey || o.keyCode != "I".charCodeAt(0)) &&
+                    ((!o.ctrlKey || !o.shiftKey || o.keyCode != "C".charCodeAt(0)) && ((!o.ctrlKey || !o
+                        .shiftKey || o.keyCode != "J".charCodeAt(0)) && ((!o.ctrlKey || o
+                        .keyCode != "U".charCodeAt(0)) && void 0))))
+            };
+        });
+    </script>
+</body>
+
+</html>

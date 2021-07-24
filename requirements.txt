@@ -1,0 +1,4 @@
+Django==3.2.5               # Have to match the version
+pillow                      # Pillow==8.2.0
+six                         # six==1.16.0
+django-ckeditor             # django-ckeditor==6.1.0

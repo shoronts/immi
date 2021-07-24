@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Si{% endblock %}
+
+{% block css %}
+<style>
+    .text-justify{
+        text-align: justify;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        <div class="card py-5 ps-5 pe-5">
+            <h2>{{ single_task.task_name }}</h2>
+            <p class="mb-0 text-justify">{{ single_task.task_description | safe }}</p>
+            <form action="{% url 'task-single' slug=single_task.task_url %}" method="POST">
+                {% csrf_token %}
+                <div class="text-center">
+                    <button type="submit" class="btn immu-btn mt-5" name="single-task-complete" value="{{ single_task.task_url }}">complete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

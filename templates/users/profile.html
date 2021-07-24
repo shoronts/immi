@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block css %}
+<style>
+    .errorlist {
+        padding-left: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control:focus {
+        border: 2px solid #51b4a9 !important;
+        box-shadow: none
+    }
+
+    .form-control {
+        border: 2px solid #333333
+    }
+    .profile-pic-thumbnil{
+        height: 200px;
+        width: 200px;
+        margin: 0 auto;
+    }
+    .profile-pic-thumbnil img{
+        height: 100%;
+        width: 100%;
+        border-radius: 100%;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="py-5 mt-5" style="height: 100%;">
+    <div class="container">
+        <div class="card">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Profile</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Edit Profile</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="ps-5 pe-5 py-5 text-center">
+                        <div class="profile-pic-thumbnil">
+                            <img src="{{ user.userinfo.profilepic.url }}" alt="{{ user.first_name }}">
+                        </div>
+                        <p class="mt-5">
+                            <span>You are a:</span> <span>{{ user.userinfo.user_type }}.</span>
+                        </p>
+                        <p>
+                            <span>First Name:</span> <span>{{ user.first_name }}</span>
+                        </p>
+                        <p>
+                            <span>Last Name:</span> <span>{{ user.last_name }}</span>
+                        </p>
+                        <p>
+                            <span>Username:</span> <span>{{ user.username }}</span>
+                        </p>
+                        <p>
+                            <span>Email:</span> <span>{{ user.email }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div style="width: 500px; margin: 20px auto;">
+                            <div class="alert alert-success" role="alert">
+                                <p class="text-center mb-0">
+                                    {{ message }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <h5 class="card-title text-center my-5">You can change your profile information by using this form.</h5>
+
+                    <form class="col-md-10 mx-auto" method="POST" action="{% url 'profile' %}"
+                        enctype="multipart/form-data" novalidate {% if form.errors %}class="was-validated"{% endif %}>
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="form-floating mb-3">
+                            {{ form.firstName }}
+                            <label class="mb-2">{{ form.firstName.label }}</label>
+                            {{ form.firstName.errors }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.lastName }}
+                            <label class="mb-2">{{ form.lastName.label }}</label>
+                            {{ form.lastName.errors }}
+                        </div>
+
+                        {% if user.userinfo.user_type == 'Current Student' %}
+                        {% endif %}
+                        <div class="form-floating mb-3">
+                            {{ form.email }}
+                            <label class="mb-2">{{ form.email.label }}</label>
+                            {{ form.email.errors }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.profile_pic }}
+                            <label class="mb-2">{{ form.profile_pic.label }}</label>
+                            {{ form.profile_pic.errors }}
+                        </div>
+        
+                        <div class="text-center my-5">
+                            <button type="submit" class="btn immu-btn">Update Profile info
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+              </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+    let id_firstName = document.querySelector('#id_firstName'),
+        id_lastName = document.querySelector('#id_lastName'),
+        id_email = document.querySelector('#id_email');
+    id_firstName.value = '{{ user.first_name }}';
+    id_lastName.value = '{{ user.last_name }}';
+    id_email.value = '{{ user.email }}';
+</script>
+{% endblock %}

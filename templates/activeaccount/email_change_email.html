@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation Link for {{ domain }}</title>
+    <style>
+        body {
+            padding: 50px 0;
+        }
+
+        .immu-btn {
+            background-color: #51b4a9;
+            color: #ffffff;
+            border-style: solid;
+            border-width: 0;
+            border-radius: 4px;
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .immu-btn:hover {
+            background-color: #333333
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Hi {{ user }},</h3>
+    <p>Wellcome To {{domain}}. Thank you for makeing an account in {{domain}}. Currently you changed your email. To verify your email and Activate your account please click this "ACTIVE ACCOUNT" button below:</p><br><br><br>
+    <a class="immu-btn" href="http://{{domain}}{%url 'activateaccount' uidb64=uid  token=token %}">Active
+        Account</a><br><br><br><br><br><br>
+    <p>Thank you for your consideration.<br>
+        Kindest regards<br>
+        Nzube Mekah<br>
+        Founder Of {{domain}}.</p>
+</body>
+
+</html>

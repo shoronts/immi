@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block css %}
+<style>
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .errorlist {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control:focus {
+        border: 2px solid #51b4a9 !important;
+        box-shadow: none
+    }
+
+    .form-control {
+        border: 2px solid #333333
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container py-5">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="alert alert-success" role="alert">
+            <p class="text-center">
+                {{ message }}
+            </p>
+        </div>
+        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}.
+        <div class="alert alert-danger" role="alert">
+            <p class="text-center">
+                {{ message }}
+            </p>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card py-5 ps-5 pe-5">
+                    <p class="pb-0 fs-3 text-center">Sign in to your account</p>
+                    <form action="{% url 'login' %}" method="POST" novalidate {% if form.errors %}class="was-validated"
+                    {% endif %}>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                    {% endif %}
+
+                    <div class="form-floating mb-3">
+                        {{ form.userName }}
+                        <label class="form-label">{{ form.userName.label }}</label>
+                        {{ form.userName.errors }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form.password }}
+                        <label class="form-label">{{ form.password.label }}</label>
+                        {{ form.password.errors }}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn immu-btn text-uppercase">Login</button>
+                        <p class="mt-5">Have no Account? <a href="{% url 'register' %}"
+                                class="text-decoration-none">Please Register.</a></p>
+                        <p>Forgot your password? <a href="{% url 'passReste' %}" class="text-decoration-none">Please
+                                Reset.</a></p>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

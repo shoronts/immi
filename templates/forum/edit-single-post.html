@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Posts{% endblock %}
+
+{% block css %}
+<style>
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .errorlist {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .errorlist li {
+        list-style: none;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control {
+        border: 2px solid #333333;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border: 2px solid #51B4A9;
+    }
+
+    .edit-images {
+        height: 300px;
+        width: 100%;
+    }
+
+    .edit-images img {
+        height: 100%;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        <form action="{% url 'edit-single-post' pk=edit_post.pk  slug=edit_post.post_url %}" method="POST" novalidate
+            {% if form.errors %}class="was-validated" {% endif %} enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="edit-images mb-5">
+                <img src="{{ edit_post.post_images.url }}" alt="{{ edit_post.title }}">
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" name="title" class="form-control" value="{{ edit_post.title }}" placeholder="Post Title" required="" id="id_title">
+                <label for="floatingInput">Post Title</label>
+                {{ form.title.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Featured Images</label>
+                {{ form.post_images }}
+                {{ form.post_images.errors }}
+            </div>
+
+            <div class="form-floating">
+                <textarea name="post_discription" cols="40" rows="10" class="form-control" style="height:300px" required="" id="id_post_discription">{{ edit_post.post_discription }}</textarea>
+                <label for="floatingTextarea2">Post Descriptions (maximum 1500 character)</label>
+                {{ form.post_discription.errors }}
+            </div>
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn immu-btn">Save Post</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

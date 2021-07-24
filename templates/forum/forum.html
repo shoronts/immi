@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Forum{% endblock %}
+
+{% block css %}
+<style>
+    .all-post-images {
+        height: 200px;
+        width: auto;
+    }
+
+    .all-post-images img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .card-body .card-text.text-justify {
+        height: 170px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container py-5">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}" role="alert">
+            <p class="text-center mb-0">
+                {{ message }}
+            </p>
+        </div>        
+        {% endfor %}
+        {% endif %}
+        <p class="text-center fs-1">All Blogs</p>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for post in posts %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="all-post-images flex-shrink-0">
+                        <img src="{{ post.post_images.url }}" alt="{{ post.title }}">
+                    </div>
+
+                    <div class="card-body">
+                        <p class="fs-4">{{ post.snippet_title }}</p>
+                        <p class="card-text text-justify">{{ post.snippet }}</p>
+                        <div class="d-flex justify-content-between align-items-center my-3">
+                            <p class="mb-0">Author:{{ post.user }}</p>
+                            <p class="mb-0">Comments: {{ post.forum_comments.count }}</p>
+                            <p class="mb-0">Likes:{{ post.total_likes }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'every-single-post' pk=post.id slug=post.post_url %}" target="_blank">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                </a>
+                            </div>
+                            <small class="text-muted">{{ post.post_date }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
