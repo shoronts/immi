@@ -1,6 +1,24 @@
 /* Common CSS */
+body,
+html {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+
+.card {
+    position: static !important;
+}
+
 .immu-btn {
-    background-color: #51b4a9;
+    border: 2px solid #333333;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 10px 30px;
+}
+
+.immu-btn:hover {
+    border: 2px solid #51B4A9 !important;
+    background-color: #51B4A9 !important;
     color: #ffffff;
 }
 
@@ -14,12 +32,53 @@
 }
 
 /* Header CSS */
-header{
-    background-color: #ffffff;
+header {
+    background: #FCFFFD;
+    box-shadow: 0px 10px 30px 10px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
 }
+
+.logo {
+    height: 80px;
+    width: 80px;
+}
+
+.logo svg {
+    height: 100%;
+    width: 100%;
+}
+
+.btn-user-auth {
+    text-decoration: none;
+    border: 2px solid #333333;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+
+.btn-user-auth:hover {
+    border: 2px solid #51B4A9 !important;
+    background-color: #51B4A9 !important;
+}
+
+.btn-user-auth:hover li {
+    color: #ffffff!important;
+}
+
+.btn-user-auth li {
+    list-style: none;
+    padding: 10px 30px;
+    color: #333333;
+}
+
 .menu-active {
-    background-color: #51b4a9 !important;
+    border: 2px solid #51B4A9 !important;
+    background-color: #51B4A9 !important;
+}
+
+.menu-active li {
     color: #ffffff;
+    background-color: #51B4A9 !important;
+    border-radius: 30px;
 }
 
 .menu ul,
@@ -51,28 +110,42 @@ header{
     padding-right: 0;
 }
 
-.menu-profile-pic{
+.menu-profile-pic {
     height: 50px;
     width: 50px;
     border-radius: 100%;
 }
 
-.menu-profile-pic img{
+.menu-profile-pic img {
     height: 100%;
     width: 100%;
     border-radius: 100%;
 }
 
 .user-profile-dropdown {
-    right: 0!important;
+    right: 0 !important;
 }
 
 /* Footer CSS */
-footer{
-    background-color: #ffffff;
+footer {
+    background: #FCFFFD;
+    box-shadow: 0px 10px 30px 10px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
 }
+
 footer a {
     color: #333333;
+}
+
+.footer-logo {
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+}
+
+.footer-logo img {
+    height: 100%;
+    width: 100%;
 }
 
 .text-decoration-none:hover {
@@ -89,16 +162,10 @@ footer a {
 }
 
 .bottom-bar {
-    background-color: #51b4a9;
+    background-color: #023436;
     color: #fff
 }
 
 .bottom-bar a:hover {
-    color: #333333 !important;
-}
-
-/* Global Body */
-
-body{
-    background-color: #F0F2F5;
+    color: #51B4A9 !important;
 }

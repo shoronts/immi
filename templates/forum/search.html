@@ -52,23 +52,8 @@
 {% endblock %}
 
 {% block content %}
-<section>
-    <div class="container py-5">
-        <div class="{% if not search_content %}my-5 py-5{% endif %}">
-            <form class="d-flex" method="POST" action="{% url 'search' %}" novalidate {% if form.errors %}class="was-validated"
-            {% endif %}>
-                {% csrf_token %}
-                {{ search.non_fiels_errors }}
-                {{ search.search }}
-                <button class="btn immu-btn" type="submit">Search</button>
-            </form>
-            {{ search.search.errors }}
-        </div>
-    </div>
-</section>
-
 {% if search_content %}
-    <section class="pb-5">
+    <section class="py-5">
         <div class="container pb-5">
             <h1 class="text-center">
                 You are searching by:

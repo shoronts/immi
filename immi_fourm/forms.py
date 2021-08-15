@@ -48,3 +48,17 @@ class edit_single_post(forms.Form):
                 }
             )
         )
+
+class search_form(forms.Form):
+    search = forms.CharField(
+        error_messages = {'required' : 'Search For Topics Required.'},
+        max_length = 100,
+        widget = forms.TextInput(
+            attrs = {
+                'placeholder' : 'Search For Topics',
+                'class' : 'form-control form-control-update',
+                # 'aria-label' : "Search",
+                # 'type' : 'search'
+                }
+            )
+        )

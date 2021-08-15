@@ -6,9 +6,9 @@ from django.utils.crypto import get_random_string
 
 
 class forum_post(models.Model):
-    user = models.CharField(max_length=255)
+    user = models.ForeignKey(User, related_name="forum_author", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    post_url = models.SlugField(null=False)
+    post_url = models.SlugField(null=True, blank=True)
     post_images = models.ImageField(upload_to='blogs_pics', blank = False, null = False)
     post_discription = models.TextField(max_length=1500)
     like = models.ManyToManyField(User, related_name="blogs_post")
@@ -16,7 +16,7 @@ class forum_post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.post_url:
-            self.post_url = slugify(self.title + get_random_string(length=4))
+            self.post_url = slugify(self.title + '-' + get_random_string(length=4))
         else:
             self.post_url = slugify(self.title)
         super().save(*args, **kwargs)
@@ -41,6 +41,10 @@ class forum_comment(models.Model):
     person = models.ForeignKey(User, related_name="forum_comments_user", on_delete=models.CASCADE)
     comment_body = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True)
+    all_like = models.ManyToManyField(User, related_name="comment_like")
+
+    def total_comment_likes(self):
+        return self.all_like.count()
 
     def __str__(self):
         return self.blogs.title

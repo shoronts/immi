@@ -1,0 +1,165 @@
+.btn:focus {
+    box-shadow: none;
+}
+
+.errorlist {
+    padding-left: 0;
+    margin-bottom: 0;
+    margin-left: 30px;
+}
+
+.errorlist li {
+    list-style: none;
+    color: red;
+    font-size: 12px;
+}
+
+.form-control:focus {
+    border: 2px solid #51b4a9 !important;
+    box-shadow: none
+}
+
+.form-control-update,
+.comment-input {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 10px;
+    padding-left: 25px;
+}
+
+.all-post-images {
+    height: 200px;
+    width: auto;
+}
+
+.all-post-images img {
+    height: 100%;
+    width: 100%;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.card-body .card-text.text-justify {
+    height: 170px;
+}
+
+.post-head-img {
+    height: 50px;
+    width: 50px;
+}
+
+.post-head-img img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.like,
+.post-comment {
+    cursor: pointer;
+    color: #023436;
+}
+
+.text-decoration-none {
+    color: #023436;
+}
+
+.forum-card {
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 30px;
+    z-index: 2;
+}
+
+.search-btn {
+    position: relative;
+}
+
+.search-btn button {
+    position: absolute;
+    top: -45px;
+    right: 10px;
+}
+
+.alert {
+    position: static !important;
+}
+
+/* forum comment  */
+
+.main-forum-back {
+    background: #F2F2F2;
+    border-radius: 30px;
+}
+
+.total-comment-history {
+    display: none;
+}
+
+.comment-input {
+    width: 70%;
+}
+
+.comment-btn {
+    border: 2px solid #333333;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 10px 30px;
+}
+
+.comment-btn:hover {
+    border: 2px solid #51B4A9 !important;
+    background-color: #51B4A9 !important;
+    color: #ffffff;
+}
+
+.comment-like {
+    cursor: pointer;
+}
+
+.all-comments {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.all-comments hr:nth-last-child(1) {
+    display: none;
+}
+
+/* Add Questions */
+.modal-content-add-questions {
+    background: #FFFFFF;
+    border-radius: 30px;
+}
+
+.modal-question-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);
+}
+
+.form-control-add-question {
+    background: #F2F2F2;
+    border-radius: 30px;
+}
+
+.ask-type {
+    padding: 0.5rem;
+    background: #F2F2F2;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+
+.ask-type:focus {
+    outline: none;
+}

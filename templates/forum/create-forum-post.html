@@ -33,7 +33,7 @@
 
 {% block content %}
 <section>
-    <div class="container py-5">
+    <div class="container mt-5 py-5">
         <form action="{% url 'create-forum-post' %}" method="POST" novalidate {% if form.errors %}class="was-validated"
             {% endif %} enctype="multipart/form-data">
             {% csrf_token %}

@@ -23,7 +23,7 @@ class UsersView():
     # Users Registration Page
     def register(request):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect('forum')
 
         elif request.method == 'POST':
             form = RegisterForm(request.POST)
@@ -34,6 +34,8 @@ class UsersView():
                 email = form.cleaned_data['email']
                 user_name = form.cleaned_data['userName']
                 password = form.cleaned_data['password']
+                nationality = form.cleaned_data['nationality']
+                program = form.cleaned_data['program']
 
                 if '@umail.ucc.ie' in email:
                     user_type = 'Current Student'
@@ -44,7 +46,7 @@ class UsersView():
                 user.is_active = False
                 user.save()
 
-                users_info = UserInfo(user=user, user_type=user_type)
+                users_info = UserInfo(user=user, user_type=user_type, nationality=nationality, program=program)
                 users_info.save()
 
                 current_site = get_current_site(request)
@@ -77,7 +79,7 @@ class UsersView():
     # Users Account Activation Page
     def ActivateAccountView(request, uidb64, token):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect('forum')
 
         else:
             try:
@@ -102,7 +104,7 @@ class UsersView():
     # Users Login Page
     def login(request):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect('forum')
 
         elif request.method == 'POST':
             form = loginForm(request.POST)
@@ -122,7 +124,7 @@ class UsersView():
 
                         else:
                             messages.success(request, 'Wellcome! You are successfully login.')
-                            return redirect('dashboard')
+                            return redirect('forum')
 
                 else:
                     messages.error(request, 'Please verify your email first.')
@@ -227,7 +229,7 @@ class UsersView():
     # Users Reset Password Email Sending Page
     def PasswordResetEmail(request):
         if request.user.is_authenticated:
-            return redirect('dashboard')
+            return redirect('forum')
 
         elif request.method == 'POST':
             form = PassResetEmailForm(request.POST)
@@ -269,7 +271,7 @@ class UsersView():
     # Users Reset Password Email Confirmation Page
     def PasswordResetForm(request, uidb64, token):
             if request.user.is_authenticated:
-                return redirect('dashboard')
+                return redirect('forum')
 
             elif request.method == 'POST':
                 form = PassResteForm(request.POST)

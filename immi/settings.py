@@ -69,6 +69,19 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             },
+#         'NAME': env_config.DB_NAME,
+#         'USER': env_config.DB_USER,
+#         'PASSWORD': env_config.DB_PASSWORD,
+#         'HOST': env_config.DB_HOST,
+#         'PORT': env_config.DB_PORT
+#         }
+#     }
 
 
 # Password validation
@@ -108,11 +121,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = BASE_DIR, 'static'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = '/home/georvxgp/immi.squaretechit.com/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
+# MEDIA_ROOT = '/home/georvxgp/immi.squaretechit.com/media'
 
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'forum'
 LOGIN_URL = 'login'
 
 

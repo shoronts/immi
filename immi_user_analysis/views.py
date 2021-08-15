@@ -10,12 +10,6 @@ from .models import users_task, user_task_status
 
 class DashboardView():
 
-    # Users Dashboard Page
-    @login_required
-    def dashboard(request):
-        return render(request, 'dashboard/dashboard.html')
-
-
     # Users Task Page
     @login_required
     def task(request):
@@ -23,7 +17,7 @@ class DashboardView():
             all_tasks = users_task.objects.all()
             return render(request, 'dashboard/task.html', {'all_tasks' : all_tasks})
         else:
-            return redirect('dashboard')
+            return redirect('forum')
 
     # Single Task Page
     @login_required
@@ -45,7 +39,7 @@ class DashboardView():
                     change_user_type.user_type = 'Current Student'
                     change_user_type.save()
                     messages.success(request, 'Now you are a Current Student. Please change your email to the official email.')
-                    return redirect('dashboard')
+                    return redirect('forum')
                 else:
                     messages.success(request, 'Wellcome! You have completed a task.')
                     return redirect('task')

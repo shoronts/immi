@@ -122,6 +122,26 @@ class RegisterForm(forms.Form):
             )
         )
 
+    nationality = forms.CharField(label = "What’s your nationality?",
+        error_messages = {'required' : 'nationality Required.'},
+        max_length = 100,
+        widget = forms.TextInput(
+            attrs = {
+                'placeholder' : 'nationality',
+                    'class' : 'form-control'}
+            )
+        )
+
+    program = forms.CharField(label = "What’s your Program ?",
+        error_messages = {'required' : 'program Required.'},
+        max_length = 100,
+        widget = forms.TextInput(
+            attrs = {
+                'placeholder' : 'program',
+                    'class' : 'form-control'}
+            )
+        )
+
     def clean_userName(self):
         data = self.cleaned_data['userName']
         if User.objects.filter(username = data).exists():
@@ -169,7 +189,7 @@ class PassResteForm(forms.Form):
                         'placeholder' : 'New Password',
                         'class' : 'form-control'
                       }),
-                    error_messages={'required': 'New Password reqiired.'},
+                    error_messages={'required': 'New Password Required.'},
                     min_length=8,
                     max_length=50)
     confirmPassword = forms.CharField(required=True, label='Confirm Password',
@@ -177,7 +197,7 @@ class PassResteForm(forms.Form):
                         'placeholder' : 'Confirm Password',
                          'class' : 'form-control'
                       }),
-                    error_messages={'required': 'Confirm Password reqiired.'},
+                    error_messages={'required': 'Confirm Password Required.'},
                     min_length=8,
                     max_length=50)
 
