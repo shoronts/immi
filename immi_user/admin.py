@@ -13,5 +13,5 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(UserInfo)
 class CustomUserInfo(admin.ModelAdmin):
-    list_display = ('user', 'user_type',)
+    list_display = ('user', 'user_type', 'nationality', 'program')
     list_display_links = ('user',)

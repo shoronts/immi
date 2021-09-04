@@ -8,4 +8,6 @@ admin.site.site_header = 'Immu admin Dashboard'
 admin.site.site_title = 'Immu'
 admin.site.index_title = 'Immu Administration'
 
-admin.site.register(notification)
+@admin.register(notification)
+class custom_notification(admin.ModelAdmin):
+    list_display = ('date', 'name', 'user', 'held_by', 'view', 'notification')
