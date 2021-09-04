@@ -23,7 +23,7 @@ class users_task(models.Model):
         return f'/tasks/{self.task_url}/'
 
     def task_snippet(self):
-        return self.task_description[:290] + ' .....'
+        return self.task_description[:150]
 
     def __str__(self):
         return self.task_name

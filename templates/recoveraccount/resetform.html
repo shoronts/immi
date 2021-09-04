@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Get Password Reset Instructions{% endblock %}
-
 {% block css %}
 <style>
+    .register-main-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/regiater-and-login/reg-back.png');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: 100% 100%;
+        background-position: top center;
+        min-height: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .registration-title {
+        background: #023436;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .registration-title p {
+        color: rgba(255, 255, 255, 0.76);
+    }
+
     .btn:focus {
         box-shadow: none;
-    }
-
-    .errorlist {
-        padding-left: 0;
-        margin-bottom: 0;
-        margin-left: 25px;
-    }
-
-    .errorlist li {
-        list-style: none;
-        color: red;
-        font-size: 12px;
     }
 
     .form-control:focus {
@@ -30,59 +37,57 @@
         box-sizing: border-box;
         border-radius: 30px;
         margin-left: 20px;
-        padding-left: 20px!important;
-    }
-
-    form .fs-5.text-center.mb-5{
-        color: #51b4a9;
+        padding-left: 20px !important;
     }
 
     .users-card {
-        background: #FFFFFF;
-        box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 30px;
+        background: rgba(2, 52, 54, 0.29);
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
     }
+
     .form-floating>label {
-        left: 10px!important;
+        left: 10px !important;
     }
+
     .form-floating>input {
         margin-left: 0;
     }
 </style>
 {% endblock %}
-
 {% block content %}
-<section class="py-5">
-    <div class="container">
-        <div class="row">
+<section class="py-5 register-main-section">
+    <div class="container py-5">
+        <div class="row py-5">
             <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <div class="card users-card py-5 ps-5 pe-5">
+            <div class="col-md-6 my-5">
+                <div class="card users-card pb-5">
                     <form action="{% url 'passReste' %}" method="POST" novalidate
                         {% if form.errors %}class="was-validated" {% endif %}>
                         {% csrf_token %}
                         {{ form.non_field_errors }}
-
-                        <p class="fs-5 text-center mb-5">Get Password Reset Instructions</p>
-
-                        {% if messages %}
-                            {% for message in messages %}
-                            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}" role="alert">
-                                <p class="text-center mb-0">
-                                    {{ message }}
-                                </p>
-                            </div>
-                            {% endfor %}
-                        {% endif %}
-
-                        <div class="form-floating mb-3">
-                            {{ form.email }}
-                            <label for="floatingInput">{{ form.email.label }}</label>
-                            {{ form.email.errors }}
+                        <div class="registration-title py-3 mb-5">
+                            <p class="fs-5 text-center mb-0">Get Password Reset Instructions</p>
                         </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn immu-btn text-uppercase">Get instructions</button>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="ms-5 me-5 alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
+                            role="alert">
+                            <p class="text-center mb-0">
+                                {{ message }}
+                            </p>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="ms-5 me-5">
+                            <div class="form-floating mb-3">
+                                {{ form.email }}
+                                <label for="floatingInput">{{ form.email.label }}</label>
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn immu-btn text-uppercase">Get instructions</button>
+                            </div>
                         </div>
                     </form>
                 </div>

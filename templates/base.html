@@ -1,34 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrapcss/bootstrap.min.css' %}">
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
     <!-- Other CSS -->
     {% block css %}{% endblock %}
-
     <!-- title and Favicon Icon -->
     <title>IMMI | {% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
-
 </head>
-
 <body>
     <header class="py-1">
         <div class="container">
@@ -38,25 +30,19 @@
                         <img src="{% static 'img/immi-logo.svg' %}" alt="Main Logo">
                     </a>
                 </div>
-
                 {% if user.is_authenticated %}
                 <div class="dashboard-menu">
                     <ul class="d-flex justify-content-between align-items-center">
-
                         <a href="{% url 'forum' %}">
                             <li
                                 class="{% if request.resolver_match.url_name == 'forum' %}dashboard-menu-active{% endif %}">
                                 Forum</li>
                         </a>
-                        
-                        {% if user.userinfo.user_type != 'Current Student' %}
                         <a href="{% url 'task' %}">
                             <li
                                 class="{% if request.resolver_match.url_name == 'task' %}dashboard-menu-active{% endif %}">
                                 Task</li>
                         </a>
-                        {% endif %}
-
                         <a href="{% url 'immigration' %}">
                             <li
                                 class="{% if request.resolver_match.url_name == 'immigration' %}dashboard-menu-active{% endif %}">
@@ -67,10 +53,14 @@
                                 class="{% if request.resolver_match.url_name == 'accommodation' %}dashboard-menu-active{% endif %}">
                                 Accommodation</li>
                         </a>
+                        <a href="{% url 'covid-info' %}" style="color: #FD9A26;">
+                            <li
+                                class="{% if request.resolver_match.url_name == 'covid-info' %}dashboard-menu-active{% endif %}">
+                                Covid-19 Info</li>
+                        </a>
                     </ul>
                 </div>
                 {% endif %}
-
                 <div class="menu">
                     <ul class="d-flex justify-content-between align-items-center">
                         {% if user.is_authenticated %}
@@ -82,7 +72,6 @@
                                 </div>
                                 {{ user.first_name }} {{ user.last_name }}
                             </a>
-
                             <ul class="dropdown-menu user-profile-dropdown" aria-labelledby="dropdownMenuLink">
                                 <li>
                                     <a class="dropdown-item {% if request.resolver_match.url_name == 'profile' %}dashboard-menu-active{% endif %}"
@@ -98,11 +87,34 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="notifications">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="notification-dropdown" data-bs-toggle="dropdown">
+                                    <svg width="21" height="25" viewBox="0 0 21 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.08 2H12.22C12.4852 2 12.7396 1.89464 12.9271 1.70711C13.1146 1.51957 13.22 1.26522 13.22 1C13.22 0.734784 13.1146 0.48043 12.9271 0.292893C12.7396 0.105357 12.4852 0 12.22 0H8.1C7.83478 0 7.58043 0.105357 7.39289 0.292893C7.20536 0.48043 7.1 0.734784 7.1 1C7.1 1.26522 7.20536 1.51957 7.39289 1.70711C7.58043 1.89464 7.83478 2 8.1 2H8.08ZM10.17 24.74C10.7892 24.7425 11.3993 24.5912 11.9456 24.2997C12.4919 24.0083 12.9573 23.5857 13.3 23.07H7.04C7.3827 23.5857 7.84809 24.0083 8.39439 24.2997C8.94069 24.5912 9.55081 24.7425 10.17 24.74ZM19.34 19.07H18.71V12.53C18.7106 12.1217 18.6805 11.7138 18.62 11.31C17.9105 11.6696 17.1254 11.8547 16.33 11.85C14.9367 11.8474 13.6014 11.292 12.6171 10.3059C11.6328 9.3197 11.08 7.98331 11.08 6.59C11.0762 5.73087 11.2894 4.88469 11.7 4.13C10.4691 3.90406 9.20354 3.95174 7.99311 4.26965C6.78269 4.58756 5.65704 5.16793 4.69602 5.96957C3.735 6.77122 2.96215 7.77451 2.43228 8.90828C1.90241 10.042 1.62851 11.2785 1.63 12.53V19.07H1C0.734784 19.07 0.48043 19.1754 0.292893 19.3629C0.105357 19.5504 0 19.8048 0 20.07C0 20.3352 0.105357 20.5896 0.292893 20.7771C0.48043 20.9646 0.734784 21.07 1 21.07H19.34C19.6052 21.07 19.8596 20.9646 20.0471 20.7771C20.2346 20.5896 20.34 20.3352 20.34 20.07C20.34 19.8048 20.2346 19.5504 20.0471 19.3629C19.8596 19.1754 19.6052 19.07 19.34 19.07Z" fill="#51B4A9" fill-opacity="0.49"/>
+                                    </svg>
+                                    <svg id="not-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </button>
+                                <ol class="dropdown-menu notification-dropdown-box" aria-labelledby="notification-dropdown">
+                                  {% for notifications in notification %}
+                                    {% if notifications.user == user.username %}
+                                        <li class="{% if not notifications.view %}notview{% endif %}">
+                                            <p><span class="total-notification" watch-notification="{{ notifications.view }}"></span> {{ notifications.notification }}</p>
+                                        </li>
+                                    {% endif %}
+                                  {% endfor %}
+                                </ol>
+                              </div>
+                        </div>
                         {% else %}
-                        <a href="{% url 'register' %}" class="btn-user-auth {% if request.resolver_match.url_name == 'register' %} menu-active{% endif %}">
-                            <li>Sign Up</li>
+                        <a href="{% url 'register' %}"
+                            class="btn-user-auth {% if request.resolver_match.url_name == 'register' %} menu-active{% endif %}">
+                            <li>Register</li>
                         </a>
-                        <a href="{% url 'login' %}" class="ms-3 btn-user-auth {% if request.resolver_match.url_name == 'login' %} menu-active{% endif %}">
+                        <a href="{% url 'login' %}"
+                            class="ms-3 btn-user-auth {% if request.resolver_match.url_name == 'login' %} menu-active{% endif %}">
                             <li>Sign In</li>
                         </a>
                         {% endif %}
@@ -111,11 +123,9 @@
             </nav>
         </div>
     </header>
-
     <!-- Global Body Start -->
     {% block content %}{% endblock %}
     <!-- Global Body Ends -->
-
     <!-- Bottom Bar Starts -->
     <section class="bottom-bar">
         <div class="container py-3">
@@ -125,17 +135,13 @@
                     document.write(new Date().getFullYear());
                 </script>. All rights reserved by
                 <a class="text-decoration-none text-white" href="{% url 'home' %}">immi.com</a>
-                | Powered by <i class="icon-heart color-danger" aria-hidden="true"></i> <a
-                    class="text-decoration-none text-white" href="https://squaretechit.com" target="_blank">Square Tech
-                    IT</a>
             </p>
         </div>
     </section>
+    {% csrf_token %}
     <!-- Bottom Bar End -->
-
     <!-- Optional JavaScript; Bootstrap Bundle with Popper! -->
     <script src="{% static 'js/bootstrapjs/bootstrap.bundle.min.js' %}"></script>
-
     <!-- Other JS -->
     {% block js %}{% endblock %}
     <script>
@@ -147,8 +153,41 @@
                         .shiftKey || o.keyCode != "J".charCodeAt(0)) && ((!o.ctrlKey || o
                         .keyCode != "U".charCodeAt(0)) && void 0))))
             };
+            // Notification System
+            let not_icon = document.querySelector('#not-icon'),
+                total_notification_count = document.querySelectorAll('.total-notification'),
+                view_notifications_btn = document.querySelector('.notifications .dropdown button')
+                new_notification_count = 0;
+            for(let new_notification = 0; new_notification < total_notification_count.length; new_notification++ ){
+                if(total_notification_count[new_notification].getAttribute('watch-notification') === 'False'){
+                    new_notification_count += 1
+                }
+            }
+            if(new_notification_count > 0){
+                not_icon.classList.add('not-icon-color');
+            } else{
+                not_icon.classList.remove('not-icon-color');
+            }
+            view_notifications_btn.addEventListener('click',function(){
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                const URL = "{% url 'notifications' %}";
+                fetch(URL, {
+                        method: 'GET',
+                        credentials: 'same-origin',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': csrftoken,
+                        }
+                    })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data['results']);
+                })
+            })
         });
     </script>
 </body>
-
 </html>

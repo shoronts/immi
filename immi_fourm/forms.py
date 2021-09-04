@@ -5,18 +5,16 @@ from .models import forum_post
 class single_post_form(forms.ModelForm):
     class Meta:
         model = forum_post
-        fields = ['title', 'post_discription', 'post_images']
+        fields = ['title', 'post_discription']
 
         widgets = {
             'title' : forms.TextInput(attrs = {'class':'form-control', 'placeholder': 'Post Title'}),
-            'post_discription' : forms.Textarea(attrs = {'class':'form-control', 'placeholder': 'Post Details', 'style': 'height:300px'}),
-            'post_images' : forms.FileInput(attrs={'class':'form-control'}),
+            'post_discription' : forms.Textarea(attrs = {'class':'form-control form-control-add-question', 'placeholder': 'Post Details', 'style': 'height:300px'}),
             }
 
         error_messages = {
             'title' : {'required' : "Title Required."},
             'post_discription' : {'required' : "Descriptions Required."},
-            'post_images' : {'required' : "Image Required."},
         }
 
 class edit_single_post(forms.Form):
@@ -26,15 +24,6 @@ class edit_single_post(forms.Form):
             attrs = {
                 'class':'form-control',
                 'placeholder': 'Post Title'
-                }
-            )
-        )
-
-    post_images = forms.CharField(
-        required=False,
-        widget = forms.FileInput(
-            attrs = {
-                'class' : 'form-control'
                 }
             )
         )
@@ -51,14 +40,12 @@ class edit_single_post(forms.Form):
 
 class search_form(forms.Form):
     search = forms.CharField(
-        error_messages = {'required' : 'Search For Topics Required.'},
+        error_messages = {'required' : 'Topics Required.'},
         max_length = 100,
         widget = forms.TextInput(
             attrs = {
                 'placeholder' : 'Search For Topics',
-                'class' : 'form-control form-control-update',
-                # 'aria-label' : "Search",
-                # 'type' : 'search'
+                'class' : 'form-control form-control-update'
                 }
             )
         )

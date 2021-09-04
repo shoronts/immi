@@ -6,10 +6,10 @@ from django.http import JsonResponse, HttpResponse
 import json
 
 from .forms import single_post_form, edit_single_post, search_form
-from .models import forum_post, forum_comment
+from .models import forum_post, forum_comment, bookmarks
+from immi_theme.models import notification
 
-
-class immu_forum():
+class immi_forum():
 
     # All forums
     def forum(request):
@@ -25,13 +25,38 @@ class immu_forum():
                 contex = {
                     'search_content':search_content,
                     'search_datas' : search_datas,
+                    'new_post_form' : single_post_form(),
                     'search' : search_form()
                 }
                 return render(request, 'forum/search.html', contex)
-            
+            contex = {
+                'new_post_form' : single_post_form(),
+                'search' : search_form(request.POST),
+                'notification': notification.objects.all().order_by('-date').order_by('-date')
+            }
+        elif request.method == 'POST' and 'new-post' in request.POST:
+            post_form = single_post_form(request.POST)
+            if post_form.is_valid():
+                forum_post_author = post_form.save(commit=False)
+                forum_post_author.user = request.user
+                forum_post_author.save()
+                messages.success(request, 'Your post is created.')
+                return redirect('forum')
+            messages.error(request, 'Something Wrong. Please try again.')
+            contex = {
+                'posts': posts,
+                'new_post_form' : post_form,
+                'search' : search_form(),
+                'notification': notification.objects.all().order_by('-date')
+            }
         else:
-            search = search_form()
-        return render(request, 'forum/forum.html', {'posts':posts, 'search':search})
+            contex = {
+                'search' : search_form(),
+                'posts': posts,
+                'new_post_form' : single_post_form(),
+                'notification': notification.objects.all().order_by('-date').order_by('-date')
+            }
+        return render(request, 'forum/forum.html', contex)
 
     # Post Likes
     @login_required
@@ -65,66 +90,29 @@ class immu_forum():
             post_data = json.load(request)
             comment_want_like = post_data["current_comment_id"]
             terget_comment = get_object_or_404(forum_comment, pk=comment_want_like)
-
             if terget_comment.all_like.filter(id=request.user.id).exists():
                 terget_comment.all_like.remove(request.user)
-
             else:
                 terget_comment.all_like.add(request.user)
-
             return JsonResponse({'results':terget_comment.all_like.all().count()})
-
-
-
-
-
-
-
-
-
-    @login_required
-    def every_single_post(request, slug, pk):
-        current_post = get_object_or_404(forum_post, pk=pk)
-
-        if request.method == 'POST' and 'comments' in request.POST:
-            main_comments = request.POST['user-comments']
-
-            if main_comments:
-                final_comment = forum_comment(blogs=current_post, person=request.user, comment_body=main_comments)
-                final_comment.save()
-                messages.success(request, 'Your comment is posted.')
-                return redirect('every-single-post', pk=pk, slug=slug)
-
-            else:
-                messages.error(request, 'Empty field not Allowed.')
-                return redirect('every-single-post', pk=pk, slug=slug)
-
-        return render(request, 'forum/every-single-post.html', {'current_post':current_post})
     
-    # Create Forums
-    @login_required
-    def create_forum_post(request):
-        if request.method == 'POST':
-            form = single_post_form(request.POST, request.FILES)
-            if form.is_valid():
-                forum_post_author = form.save(commit=False)
-                forum_post_author.user = request.user
-                forum_post_author.save()
-                messages.success(request, 'Your post is created.')
-                return redirect('forum')
-        else:
-            form = single_post_form()
-        return render(request, 'forum/create-forum-post.html', {'form':form})
-
+    # All Post By User
     @login_required
     def all_post_by_user(request):
-        current_post = forum_post.objects.all().order_by('-post_date')
-        return render(request, 'forum/all-my-post.html', {'current_post':current_post})
+        current_post = forum_post.objects.filter(user=request.user).order_by('-post_date')
+        contex = {
+            'current_post':current_post,
+            'search' : search_form(),
+            'new_post_form' : single_post_form(),
+            'notification': notification.objects.all().order_by('-date')
+        }
+        return render(request, 'forum/all-my-post.html', contex)
 
+    # Delete Single Post
     @login_required
     def del_single_post(request, slug, pk):
         delete_data = get_object_or_404(forum_post, pk=pk)
-        if delete_data.user == request.user.username:
+        if delete_data.user == request.user:
             delete_data.delete()
             messages.success(request, 'Your post is Deleted.')
             return redirect('all-post-user')
@@ -132,10 +120,11 @@ class immu_forum():
             messages.error(request, 'Your have access only for these posts.')
             return redirect('all-post-user')
 
+    # Edit Single Post
     @login_required
     def edit_single_post(request, slug, pk):
         edit_post = get_object_or_404(forum_post, pk=pk)
-        if edit_post.user == request.user.username:
+        if edit_post.user == request.user:
             if request.method == 'POST':
                 form = edit_single_post(request.POST, request.FILES)
                 if form.is_valid():
@@ -152,9 +141,39 @@ class immu_forum():
                     messages.success(request, 'Your post is edited.')
                     return redirect('all-post-user')
             else:
-                form = edit_single_post()
-            return render(request, 'forum/edit-single-post.html', {'edit_post':edit_post, 'form':form})
-
+                contex = {
+                    'form' : edit_single_post(),
+                    'edit_post':edit_post,
+                    'new_post_form' : single_post_form(),
+                    'notification': notification.objects.all().order_by('-date')
+                }
+            return render(request, 'forum/edit-single-post.html', contex)
         else:
             messages.error(request, 'Your have access only for these posts.')
             return redirect('all-post-user')
+
+    # Bookmarks Page
+    @login_required
+    def bookmarks(request):
+        if request.method == 'POST' and request.is_ajax():
+            post_data_for_bookmarks = json.load(request)
+            post_want_to_bookmarks = post_data_for_bookmarks["current_post_id"]
+            if bookmarks.objects.filter(blogs=post_want_to_bookmarks).exists():
+                remove_bookmarks = get_object_or_404(bookmarks, blogs=post_want_to_bookmarks)
+                remove_bookmarks.delete()
+                error_message_done = '<div class="alert alert-danger" role="alert"><p class="text-center mb-0">Successfully removed from your bookmarks.</p></div>'
+                return JsonResponse({'results':error_message_done})
+            else:
+                find_blogs_for_bookmarks = get_object_or_404(forum_post, pk=post_want_to_bookmarks)
+                add_bookmarks = bookmarks(blogs=find_blogs_for_bookmarks, user=request.user)
+                add_bookmarks.save()
+                success_message_done = '<div class="alert alert-success" role="alert"><p class="text-center mb-0">Successfully added to your bookmarks.</p></div>'
+                return JsonResponse({'results':success_message_done})
+        else:
+            contex = {
+                'new_post_form' : single_post_form(),
+                'search' : search_form(),
+                'bookmarks' : bookmarks.objects.filter(user=request.user),
+                'notification': notification.objects.all().order_by('-date')
+            }
+        return render(request, 'forum/bookmarks.html', contex)

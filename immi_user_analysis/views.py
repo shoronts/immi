@@ -4,20 +4,18 @@ from django.contrib.auth.models import auth, User
 from django.contrib.auth.decorators import login_required
 
 from immi_user.models import UserInfo
+from immi_theme.models import notification
 
 from .models import users_task, user_task_status
 
 
-class DashboardView():
+class immi_user_task():
 
     # Users Task Page
     @login_required
     def task(request):
-        if request.user.userinfo.user_type == 'Prospective Student':
-            all_tasks = users_task.objects.all()
-            return render(request, 'dashboard/task.html', {'all_tasks' : all_tasks})
-        else:
-            return redirect('forum')
+        all_tasks = users_task.objects.all()
+        return render(request, 'dashboard/task.html', {'all_tasks' : all_tasks,'notification': notification.objects.all()})
 
     # Single Task Page
     @login_required
@@ -39,19 +37,8 @@ class DashboardView():
                     change_user_type.user_type = 'Current Student'
                     change_user_type.save()
                     messages.success(request, 'Now you are a Current Student. Please change your email to the official email.')
-                    return redirect('forum')
+                    return redirect('task')
                 else:
                     messages.success(request, 'Wellcome! You have completed a task.')
                     return redirect('task')
-        return render(request, 'dashboard/single-task.html', {'single_task':single_tasks})
-
-    # Users Accommodation Page
-    @login_required
-    def accommodation(request):
-        return render(request, 'dashboard/accommodation.html')
-
-
-    # Users Immigration Page
-    @login_required
-    def immigration(request):
-        return render(request, 'dashboard/immigration.html')
+        return render(request, 'dashboard/single-task.html', {'notification': notification.objects.all().order_by('-date')})

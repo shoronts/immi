@@ -1,101 +1,117 @@
-{% extends 'base.html' %}
+{% extends 'forum/forumbase.html' %}
 {% load static %}
-
-{% block title %}All Forums By {{ user.username }} {% endblock %}
-
-{% block css %}
-<style>
-    .all-post-images {
-        height: 200px;
-        width: auto;
-    }
-
-    .all-post-images img {
-        height: 100%;
-        width: 100%;
-    }
-    .card-body .card-text.text-justify{
-        height: 170px;
-    }
-
-    .text-justify {
-        text-align: justify;
-    }
-
-    .btn-group a button{
-        width: 80px;
-    }
-
-    .btn-group a:nth-child(3) button:hover {
-        background-color: red;
-        border: 1px solid red;
-    }
-
-    .btn-group a:nth-child(2) button:hover {
-        background-color: green;
-        border: 1px solid green;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-<section>
-    <div class="container py-5">
-        {% if messages %}
-        {% for message in messages %}
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-        <div class="alert alert-success" role="alert">
-            <p class="text-center mb-0">
-                {{ message }}
-            </p>
-        </div>
-        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}.
-        <div class="alert alert-danger" role="alert">
-            <p class="text-center mb-0">
-                {{ message }}
-            </p>
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        <p class="text-center fs-1">All Blogs Created By {{ user.first_name }}</p>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for post in current_post %}
-            {% if post.user == user.username %}
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div class="all-post-images flex-shrink-0">
-                        <img src="{{ post.post_images.url }}" alt="{{ post.title }}">
-                    </div>
-
-                    <div class="card-body">
-                        <p class="fs-4">{{ post.snippet_title }}</p>
-                        <p class="card-text text-justify">{{ post.snippet }}</p>
-                        <div class="d-flex justify-content-between align-items-center my-3">
-                            <p class="mb-0">Author:{{ post.user }}</p>
-                            <p class="mb-0">Comments:{{ post.forum_comments.count }}</p>
-                            <p class="mb-0">Likes:{{ post.total_likes }}</p>
+{% block title %}All Forum By {{ user.username }}{% endblock %}
+{% block forum %}
+<div class="col-md-6">
+    {% for post in current_post %}
+        <div class="main-forum-back">
+            <div class="card forum-card py-4 ps-4 pe-4 mt-5">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <div class="post-head-img">
+                            <img src="{{ post.user.userinfo.profilepic.url }}" alt="{{ post.user.username }}">
                         </div>
-                        <p>Date: <small class="text-muted">{{ post.post_date }}</small></p>
-                        <div class="d-flex justify-content-center align-items-center">
+                        <div class="author-details ms-3">
+                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.user.first_name }} {{ post.user.last_name }}</small></p>
+                            <p class="mb-0"><small class="text-muted">{{ post.post_date }}</small></p>
+                        </div>
+                    </div>
+                    <div class="all-tags">
+                        <div class="d-flex">
+                            <p class="me-1">Immigration</p>
+                            <p class="ms-1">Visa</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="fs-5 my-3 long-post-title">{{ post.title }}</p>
+                <p class="card-text text-justify long-post-discription">{{ post.post_discription }}</p>
+                <div class="d-flex justify-content-between">
+                    <div class="like-users-pics d-flex">
+                        {% for pics in post.like.all|slice:3 %}
+                            <div class="single-like-user-pic">
+                                <img src="{{ pics.userinfo.profilepic.url }}" alt="{{ pics.username }}">
+                            </div>
+                        {% endfor %}
+                        <div class="single-like-user-pic single-like-user-pic-value">
+                            <span class="ps-1">+{{ post.like.all.count }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center like post-like"
+                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                            <span class="ms-2 like-count">{{ post.total_likes }}</span>
+                        </div>
+                        <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
+                            post-url="{{ post.post_url }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+                                <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+                            </svg>
+                            <span class="ms-2 total-comment-count">{{ post.forum_comments.count }}</span>
+                        </div>
+                        <div class="ms-5 mt-2 move-to-bookmarks" post-bookmark-url="{% url 'bookmarks' %}" post-id="{{ post.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="ms-5 mt-2 three-dots">
                             <div class="btn-group">
-                                <a href="{% url 'every-single-post' pk=post.id slug=post.post_url %}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                </a>
-                                <a class="ms-5 me-5" href="{% url 'edit-single-post' pk=post.id slug=post.post_url %}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </a>
-                                <a href="{% url 'delete-single-post' pk=post.id slug=post.post_url %}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-                                </a>
+                                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'edit-single-post' pk=post.id slug=post.post_url %}">Edit Post</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'delete-single-post' pk=post.id slug=post.post_url %}">Delete Post</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endif %}
-            {% endfor %}
+            <!-- Comment Sections -->
+            <div class="total-comment-history py-3">
+                <div class="d-flex justify-content-between ps-3 pe-3">
+                    <input type="text" placeholder="Add A Comment" class="form-control comment-input">
+                    <button type="button" class="btn comment-btn" comment-id="{{ post.id }}"
+                        comment-url="{% url 'users_comments' %}">Add Comment</button>
+                </div>
+
+                <div class="all-comments mt-3" id="all-comments-id">
+                    {% for single_comment in post.forum_comments.all|dictsortreversed:'comment_date' %}
+                        <div class="comment py-3 ps-5 pe-5">
+                            <div class="d-flex">
+                                <div class="post-head-img">
+                                    <img src="{{ single_comment.person.userinfo.profilepic.url }}"
+                                        alt="{{ single_comment.person.username }}">
+                                </div>
+                                <div class="author-details ms-3">
+                                    <p class="mb-0"><small
+                                            class="text-muted text-capitalize">{{ single_comment.person.username }}</small>
+                                    </p>
+                                    <p class="mb-0"><small class="text-muted">{{ single_comment.comment_date }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="my-3 text-justify">{{ single_comment.comment_body }}</p>
+                            <div class="d-flex align-items-center comment-like"
+                                comment-like-url="{% url 'users_comment_likes' %}"
+                                comment-id="{{ single_comment.id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                                <span
+                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    {% endfor %}
+</div>
 {% endblock %}

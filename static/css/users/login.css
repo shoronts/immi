@@ -1,17 +1,25 @@
+.login-main-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/regiater-and-login/reg-back.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-position: top center;
+    min-height: 100%;
+    background-repeat: no-repeat;
+}
+
+.registration-title {
+    background: #023436;
+    border-radius: 10px 10px 0 0;
+}
+
+.registration-title p {
+    color: rgba(255, 255, 255, 0.76);
+}
+
 .btn:focus {
     box-shadow: none;
-}
-
-.errorlist {
-    padding-left: 0;
-    margin-bottom: 0;
-    margin-left: 25px;
-}
-
-.errorlist li {
-    list-style: none;
-    color: red;
-    font-size: 12px;
 }
 
 .form-control:focus {
@@ -28,9 +36,9 @@
 }
 
 .users-card {
-    background: #FFFFFF;
-    box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
+    background: rgba(2, 52, 54, 0.29);
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 form .mb-5.fs-5.text-center {
@@ -43,7 +51,7 @@ form a {
 }
 
 form a:hover {
-    color: #333333 !important;
+    color: #ffffff !important;
 }
 
 .form-floating>label {

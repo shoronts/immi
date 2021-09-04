@@ -1,0 +1,231 @@
+{% extends 'forum/forumbase.html' %}
+{% load static %}
+{% block title %}{{ current_groups_info.group_name }} - Group Message{% endblock %}
+{% block forumcss %}
+<link rel="stylesheet" href="{% static 'css/message/message.css' %}">
+{% endblock %}
+{% block forum %}
+<div class="col-md-6">
+    <div class="card ps-3 pe-3 py-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="current-user-info">
+                {% for group_users in current_groups_info.group_member.all|slice:3 %}
+                    <div class="group-user-pro-pic">
+                        <img src="{{ group_users.userinfo.profilepic.url }}" alt="">
+                    </div>
+                {% endfor %}
+                <p class="mb-0">{{ current_groups_info.group_name }}</p>
+            </div>
+            <div class="users-others-system">
+                <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                </svg>
+                <svg class="me-3" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-camera-video-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                </svg>
+            </div>
+        </div>
+        <hr>
+        <div id="single-group-message-box"></div>
+        <div class="write-message-box">
+            <svg class="ms-2 me-2" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+                <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+                <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"/>
+            </svg>
+            <input class="form-control" type="text" placeholder="Message" id="message-for-server">
+            <svg class="ms-2 me-2" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-emoji-laughing" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M12.331 9.5a1 1 0 0 1 0 1A4.998 4.998 0 0 1 8 13a4.998 4.998 0 0 1-4.33-2.5A1 1 0 0 1 4.535 9h6.93a1 1 0 0 1 .866.5zM7 6.5c0 .828-.448 0-1 0s-1 .828-1 0S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 0-1 0s-1 .828-1 0S9.448 5 10 5s1 .672 1 1.5z"/>
+            </svg>
+            <svg class="ms-2 me-2" width="30" height="30" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.16071 12.9706L13.9574 5.17396C14.0694 5.06195 14.1317 4.90942 14.1306 4.74994C14.1296 4.59045 14.0652 4.43708 13.9517 4.32355C13.8381 4.21002 13.6848 4.14563 13.5253 4.14456C13.3658 4.14349 13.2133 4.20582 13.1012 4.31784L5.30458 12.1145C4.98385 12.4352 4.80538 12.872 4.80845 13.3286C4.81151 13.7853 4.99586 14.2245 5.32093 14.5495C5.646 14.8746 6.08517 15.0589 6.54183 15.062C6.99849 15.0651 7.43522 14.8866 7.75596 14.5659L15.6399 6.68193C15.9142 6.42202 16.1329 6.1091 16.2831 5.76164C16.4333 5.41418 16.5119 5.03922 16.5144 4.65888C16.5169 4.27854 16.4432 3.90053 16.2976 3.54716C16.152 3.19379 15.9374 2.87222 15.6666 2.60143C15.3959 2.33063 15.0743 2.1161 14.7209 1.9705C14.3675 1.82489 13.9895 1.75116 13.6092 1.75365C13.2289 1.75614 12.8539 1.83481 12.5064 1.98501C12.159 2.13521 11.8461 2.3539 11.5861 2.62817L3.7022 10.5121C2.96215 11.2522 2.55037 12.2599 2.55744 13.3135C2.56452 14.3672 2.98987 15.3805 3.73992 16.1305C4.48997 16.8806 5.50328 17.3059 6.55694 17.313C7.6106 17.3201 8.61829 16.9083 9.35834 16.1683L17.1592 8.36737C17.2712 8.25536 17.3336 8.10283 17.3325 7.94335C17.3314 7.78386 17.267 7.63048 17.1535 7.51695C17.04 7.40342 16.8866 7.33904 16.7271 7.33797C16.5676 7.3369 16.4151 7.39923 16.3031 7.51125L8.50221 15.3121C7.98657 15.8278 7.28444 16.1147 6.55028 16.1098C5.81612 16.1048 5.11007 15.8085 4.58746 15.2859C4.06485 14.7632 3.76848 14.0572 3.76355 13.323C3.75862 12.5889 4.04554 11.8867 4.56118 11.3711L12.4451 3.48715C12.7513 3.18097 13.1682 3.01061 13.6041 3.01354C14.0401 3.01646 14.4593 3.19244 14.7696 3.50275C15.0799 3.81307 15.2559 4.2323 15.2588 4.66822C15.2617 5.10414 15.0914 5.52105 14.7852 5.82723L6.90126 13.7112C6.80455 13.8079 6.67287 13.8617 6.53518 13.8608C6.3975 13.8598 6.26508 13.8043 6.16706 13.7062C6.06905 13.6082 6.01347 13.4758 6.01254 13.3381C6.01162 13.2004 6.06543 13.0688 6.16214 12.9721L6.16071 12.9706Z" fill="#9CD2CC"/>
+            </svg>                
+            <svg id="send-message" class="ms-2 me-2" width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.6405 5.14529C22.1223 2.87696 23.5507 0.620277 25.831 0.104755C26.8731 -0.130824 27.9661 0.0342074 28.8909 0.566802L45.8866 10.3545C47.9104 11.52 48.6012 14.0969 47.4295 16.11C47.0588 16.7469 46.5268 17.276 45.8866 17.6447L28.8909 27.4325C26.8671 28.598 24.2767 27.9109 23.1051 25.8978C22.5696 24.9778 22.4037 23.8905 22.6405 22.854L24.6635 13.9997L22.6405 5.14529ZM27.2375 15.4037L25.3931 23.4763C25.3142 23.8218 25.3695 24.1842 25.548 24.4909C25.9385 25.1619 26.802 25.3909 27.4766 25.0024L44.4723 15.2147C44.6857 15.0918 44.863 14.9154 44.9865 14.7031C45.3771 14.0321 45.1469 13.1732 44.4723 12.7847L27.4766 2.99684C27.1683 2.8193 26.804 2.76432 26.4566 2.84285C25.6965 3.01469 25.2204 3.76689 25.3931 4.523L27.2375 12.5957H33.8736C34.6531 12.5957 35.285 13.2243 35.285 13.9997C35.285 14.7751 34.6531 15.4037 33.8736 15.4037H27.2375ZM1.4114 15.4037C0.631906 15.4037 0 14.7751 0 13.9997C0 13.2243 0.631906 12.5957 1.4114 12.5957H16.9368C17.7163 12.5957 18.3482 13.2243 18.3482 13.9997C18.3482 14.7751 17.7163 15.4037 16.9368 15.4037H1.4114ZM5.6456 8.38382C4.86611 8.38382 4.2342 7.75524 4.2342 6.97985C4.2342 6.20446 4.86611 5.57589 5.6456 5.57589H12.7026C13.4821 5.57589 14.114 6.20446 14.114 6.97985C14.114 7.75524 13.4821 8.38382 12.7026 8.38382H5.6456ZM5.6456 22.4235C4.86611 22.4235 4.2342 21.7949 4.2342 21.0195C4.2342 20.2441 4.86611 19.6156 5.6456 19.6156H12.7026C13.4821 19.6156 14.114 20.2441 14.114 21.0195C14.114 21.7949 13.4821 22.4235 12.7026 22.4235H5.6456Z" fill="#51B4A9"/>
+            </svg>                
+        </div>
+    </div>
+</div>
+<div class="col-md-3">
+    <!-- message users list -->
+    <div class="card ps-3 pe-3 py-3">
+        <p class="fs-3 mb-3">Groups</p>
+        <div class="message-user-list">
+            <ul class="list-group group-user-pic-box">
+                {% for groups in groups_list %}
+                    {% for check_user in groups.group_member.all %}
+                        {% if user == check_user %}
+                            <a href="{% url 'single-group-message' slug=groups.slug %}">
+                                {% for group_users in groups.group_member.all|slice:3 %}
+                                    <div class="group-user-pro-pic">
+                                        <img src="{{ group_users.userinfo.profilepic.url }}" alt="">
+                                    </div>
+                                {% endfor %}
+                                <li>{{ groups.group_name }}</li>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<section style="display: none;">
+    {% for group_users in current_groups_info.group_member.all %}
+        {% if group_users.username != user.username %}
+            <p class="group-users-details" user-name="{{ group_users.username }}" user-pro-pic="{{ group_users.userinfo.profilepic.url }}"></p>
+        {% endif %}
+    {% endfor %}
+</section>
+{% csrf_token %}
+{% endblock %}
+{% block forumjs %}
+<script>
+    // Active Message User
+    let terget_url_to_activate = document.querySelectorAll('.message-user-list .list-group a'),
+        match = window.location.href.split("/");
+    for (let a = 0; a < terget_url_to_activate.length; a++){
+        let current_url = terget_url_to_activate[a].getAttribute("href").split("/");
+        if (match[4] == current_url[2]){
+            terget_url_to_activate[a].classList.add('active');
+        }
+    }
+    // Send Message
+    let send_group_message_btn = document.querySelector('#send-message'),
+        message_for_server = document.querySelector('#message-for-server'),
+        all_users_details = document.querySelectorAll('.group-users-details'),
+        single_group_message_box = document.querySelector('#single-group-message-box'),
+        current_sender_name = '{{ user.username }}',
+        current_sender_pic = '{{ user.userinfo.profilepic.url }}';
+    single_group_message_box.scroll(0, single_group_message_box.scrollHeight);
+    send_group_message_btn.addEventListener('click', function(){
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const URL = "{% url 'single-group-message' slug=current_groups_info.slug %}";
+        fetch(URL, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                'message': message_for_server.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            let all_group_message_from_server_from_send = JSON.parse(data['results']);
+            single_group_message_box.innerHTML = '';
+            for (let break_group_message_for_send = 0; break_group_message_for_send < all_group_message_from_server_from_send.length; break_group_message_for_send++){
+                let single_group_message_data_for_send = all_group_message_from_server_from_send[break_group_message_for_send]['fields'],
+                    current_group_message_date = new Date(single_group_message_data_for_send['date']),
+                    other_user_name, other_user_pro_pic;
+                const current_group_send_months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+                const current_group_send_days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                for(let gul = 0; gul < all_users_details.length; gul++){
+                    if(all_users_details[gul].getAttribute('user-name') == single_group_message_data_for_send['sender'] ){
+                        other_user_name = all_users_details[gul].getAttribute('user-name');
+                        other_user_pro_pic = all_users_details[gul].getAttribute('user-pro-pic');
+                    }
+                }
+                if(current_sender_name == single_group_message_data_for_send['sender']){
+                    single_group_message_box.innerHTML += `
+                        <div class="d-flex align-items-end flex-column mb-3">
+                            <div class="d-flex">
+                                <div class="right-message-box">
+                                    <p class="mb-0 text-justify">` + single_group_message_data_for_send['message'] + `</p>
+                                </div>
+                                <div class="sender-user-pic">
+                                    <img src="` + current_sender_pic + `" alt="` + current_sender_name + `">
+                                </div>
+                            </div>
+                            <p class="pb-0 me-5 pe-3">`+ current_group_send_days[current_group_message_date.getDay()] + ' ' + current_group_send_months[current_group_message_date.getMonth()] + ' ' + current_group_message_date.getDate() + ', ' + current_group_message_date.getFullYear() + ' ' + current_group_message_date.getHours() + ':' + current_group_message_date.getMinutes()+ ':' + current_group_message_date.getSeconds() + `</p>
+                        </div>`;
+                }else{
+                    single_group_message_box.innerHTML += `
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <div class="d-flex">
+                            <div class="receiver-pic">
+                                <img src="` + other_user_pro_pic + `" alt="` + other_user_name + `">
+                            </div>
+                            <div class="left-message-box">
+                                <p class="mb-0 text-justify">`  + single_group_message_data_for_send['message'] +  `</p>
+                            </div>
+                        </div>
+                        <p class="mb-0 ms-5 ps-3">`+ current_group_send_days[current_group_message_date.getDay()] + ' ' + current_group_send_months[current_group_message_date.getMonth()] + ' ' + current_group_message_date.getDate() + ', ' + current_group_message_date.getFullYear() + ' ' + current_group_message_date.getHours() + ':' + current_group_message_date.getMinutes()+ ':' + current_group_message_date.getSeconds() + `</p>
+                    </div>`;
+                }
+            }
+            single_group_message_box.scroll(0, single_group_message_box.scrollHeight);
+        })
+        message_for_server.value = '';
+    })
+    // Realtime Message
+    setInterval(function (){
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const URL = "{% url 'single-group-message' slug=current_groups_info.slug %}";
+        fetch(URL, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            let all_group_message_from_server = JSON.parse(data['results']),
+            all_group_message_length = document.querySelectorAll('#single-group-message-box div').length;
+            single_group_message_box.innerHTML = '';
+            for (let break_group_message = 0; break_group_message < all_group_message_from_server.length; break_group_message++){
+                let single_group_message_data = all_group_message_from_server[break_group_message]['fields'],
+                    group_message_date = new Date(single_group_message_data['date']),
+                    other_user_name_final, other_user_pro_pic_final;
+                const current_group_send_months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."];
+                const current_group_send_days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                for(let gul = 0; gul < all_users_details.length; gul++){
+                    if(all_users_details[gul].getAttribute('user-name') == single_group_message_data['sender'] ){
+                        other_user_name_final = all_users_details[gul].getAttribute('user-name');
+                        other_user_pro_pic_final = all_users_details[gul].getAttribute('user-pro-pic');
+                    }
+                }
+                if(current_sender_name == single_group_message_data['sender']){
+                    single_group_message_box.innerHTML += `
+                        <div class="d-flex align-items-end flex-column mb-3">
+                            <div class="d-flex">
+                                <div class="right-message-box">
+                                    <p class="mb-0 text-justify">` + single_group_message_data['message'] + `</p>
+                                </div>
+                                <div class="sender-user-pic">
+                                    <img src="` + current_sender_pic + `" alt="` + current_sender_name + `">
+                                </div>
+                            </div>
+                            <p class="pb-0 me-5 pe-3">`+ current_group_send_days[group_message_date.getDay()] + ' ' + current_group_send_months[group_message_date.getMonth()] + ' ' + group_message_date.getDate() + ', ' + group_message_date.getFullYear() + ' ' + group_message_date.getHours() + ':' + group_message_date.getMinutes()+ ':' + group_message_date.getSeconds() + `</p>
+                        </div>`;
+                }else{
+                    single_group_message_box.innerHTML += `
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <div class="d-flex">
+                            <div class="receiver-pic">
+                                <img src="` + other_user_pro_pic_final + `" alt="` + other_user_name_final + `">
+                            </div>
+                            <div class="left-message-box">
+                                <p class="mb-0 text-justify">`  + single_group_message_data['message'] +  `</p>
+                            </div>
+                        </div>
+                        <p class="mb-0 ms-5 ps-3">`+ current_group_send_days[group_message_date.getDay()] + ' ' + current_group_send_months[group_message_date.getMonth()] + ' ' + group_message_date.getDate() + ', ' + group_message_date.getFullYear() + ' ' + group_message_date.getHours() + ':' + group_message_date.getMinutes()+ ':' + group_message_date.getSeconds() + `</p>
+                    </div>`;
+                }
+            }
+            if (all_group_message_length < document.querySelectorAll('#single-group-message-box div').length){
+                single_group_message_box.scroll(0, single_group_message_box.scrollHeight);
+            }
+        })
+    }, 1000);
+</script>
+{% endblock %}

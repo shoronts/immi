@@ -1,41 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Login{% endblock %}
-
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/users/login.css' %}">
 {% endblock %}
-
 {% block content %}
-<section class="py-5">
+<section class="py-5 login-main-section">
     <div class="container py-5">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <div class="card users-card py-5 ps-5 pe-5">
-                    <form action="{% url 'login' %}" method="POST" novalidate {% if form.errors %}class="was-validated"
-                        {% endif %}>
-                        {% csrf_token %}
-                        {{ form.non_field_errors }}
-
-                        <p class="mb-5 fs-5 text-center">Sign in to your account</p>
-
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
-                            role="alert">
-                            <p class="text-center mb-0">
-                                {{ message }}
-                            </p>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-
+                <form action="{% url 'login' %}" method="POST" novalidate {% if form.errors %}class="card users-card pb-5 was-validated"{% else %}class="card users-card pb-5"
+                    {% endif %}>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="registration-title py-3 mb-5">
+                        <p class="fs-5 text-center mb-0">Sign in to your account</p>
+                    </div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="ms-5 me-5 alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
+                        role="alert">
+                        <p class="text-center mb-0">
+                            {{ message }}
+                        </p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="ps-5 pe-5">
                         {% if request.GET.next %}
                         <input type="hidden" name="next" value="{{ request.GET.next }}">
                         {% endif %}
-
                         <div class="form-floating mb-3">
                             {{ form.userName }}
                             <label class="form-label">{{ form.userName.label }}</label>
@@ -48,12 +43,12 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn immu-btn">Sign In</button>
-                            <p class="mt-5">Have no Account? <a href="{% url 'register' %}">Please Register.</a></p>
+                            <p class="mt-5 text-white">Have no Account? <a href="{% url 'register' %}">Please Register.</a></p>
                             <p><a href="{% url 'passReste' %}">Forgot your password? Please
                                     Reset.</a></p>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="col-md-3"></div>
         </div>

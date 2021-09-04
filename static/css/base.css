@@ -10,10 +10,34 @@ html {
 }
 
 .immu-btn {
-    border: 2px solid #333333;
+    border: 2px solid #ffffff;
     box-sizing: border-box;
     border-radius: 30px;
     padding: 10px 30px;
+    color: #ffffff;
+}
+
+.btn-more-information {
+    background: #51B4A9;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 15px 40px;
+}
+
+.btn-more-information:hover {
+    color: #FFFFFF;
+}
+
+.errorlist {
+    padding-left: 0;
+    margin-bottom: 0;
+    margin-left: 25px;
+}
+
+.errorlist li {
+    list-style: none;
+    color: red;
+    font-size: 12px;
 }
 
 .immu-btn:hover {
@@ -50,18 +74,18 @@ header {
 
 .btn-user-auth {
     text-decoration: none;
-    border: 2px solid #333333;
+    border: 1px solid #51B4A9;
     box-sizing: border-box;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .btn-user-auth:hover {
-    border: 2px solid #51B4A9 !important;
+    border: 1px solid #51B4A9 !important;
     background-color: #51B4A9 !important;
 }
 
 .btn-user-auth:hover li {
-    color: #ffffff!important;
+    color: #ffffff !important;
 }
 
 .btn-user-auth li {
@@ -79,6 +103,10 @@ header {
     color: #ffffff;
     background-color: #51B4A9 !important;
     border-radius: 30px;
+}
+
+.dropdown.dashboard-menu {
+    min-width: 180px;
 }
 
 .menu ul,
@@ -124,6 +152,55 @@ header {
 
 .user-profile-dropdown {
     right: 0 !important;
+}
+
+.notifications {
+    margin-left: 40px;
+    cursor: pointer;
+    position: relative;
+}
+
+.notifications button {
+    color: #03686C;
+}
+
+.notifications .dropdown-menu.notification-dropdown-box {
+    padding: 0;
+    max-height: 400px;
+    min-height: 300px;
+}
+
+.notifications .dropdown-menu.notification-dropdown-box li p {
+    padding: 25px 10px;
+    margin-bottom: 0;
+}
+
+.notifications .dropdown-menu.notification-dropdown-box li:hover p {
+    background: #03686C;
+    color: #ffffff;
+}
+.notifications .dropdown-menu.notification-dropdown-box .notview {
+    background: #023436;
+    color: #ffffff;
+}
+
+#not-icon {
+    position: absolute;
+    top: 9px;
+    left: 25px;
+}
+
+.not-icon-color{
+    color: red;
+}
+
+.notification-dropdown-box {
+    width: 600px;
+}
+
+.dropdown-menu.notification-dropdown-box li p {
+    text-align: justify;
+    padding: 0 20px;
 }
 
 /* Footer CSS */

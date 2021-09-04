@@ -1,18 +1,141 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Home{% endblock %}
-
 {% block css %}
-
+<link rel="stylesheet" href="{% static 'css/theme/home.css' %}">
 {% endblock %}
-
 {% block content %}
-<section>
+<!-- First Section -->
+<section class="homeFirstSec">
     <div class="container py-5">
-        <h1 class="text-center py-5">
-            Home page
-        </h1>
+        <div class="row py-5">
+            <div class="col-md-3 py-5">
+                <h3 class="text-white mb-3">International Students</h3>
+                <p class="text-white mb-4">Let us help make your experience from a prospect seamless and stress-free.
+                    All the information you
+                    need to begin your journey is one click away.</p>
+                <button type="button" class="btn btn-learn">Learn More</button>
+            </div>
+            <div class="col-md-9"></div>
+        </div>
+    </div>
+</section>
+<!-- Second Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="home-header">
+            <p class="fs-3 text-center" style="color: #03686C;">Important things to do before you arrive</p>
+            <p class="text-center">Step by step guide on how to go about your tasks. We’ll feel here with relevant text
+                Step by step guide on how to go about your tasks </p>
+        </div>
+    </div>
+    <!-- First Content Section -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Visa & Immigration</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Visa & Immigration</p>
+                        <p>The International Office will be updating this page as we receive new Immigration
+                            registration guidelines from the Irish... <a href="#" class="text-decoration-none"
+                                style="color: #03686C;">read more</a> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Fees & Living Cost</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Fees & Living Cost</p>
+                        <p>It can be difficult to work out how much the cost of living is in a different country. Cost
+                            of living may vary greatly... <a href="#" class="text-decoration-none"
+                                style="color: #03686C;">read more</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Second Content Section -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Accommodation</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Accommodation</p>
+                        <p>The Accommodation & Community Life office focuses on providing an up-to-date information
+                            service... <a href="#" class="text-decoration-none" style="color: #03686C;">read more</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Key Dates</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Key Dates</p>
+                        <p>Orientation is designed specifically to enhance the experience of incoming students and
+                            encourage you to take advantage.... <a href="#" class="text-decoration-none"
+                                style="color: #03686C;">read more</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Third Content Section  -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Getting to Campus</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Getting to Campus</p>
+                        <p>To help you make as smooth a journey as possible we have provided some basic information
+                            about airports... <a href="#" class="text-decoration-none" style="color: #03686C;">read
+                                more</a> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div class="d-flex">
+                    <div class="home-task-image"
+                        style="background-image: linear-gradient(rgba(2, 52, 54, 0.42), rgba(2, 52, 54, 0.42)),url('/static/img/home/HeroImage.png');">
+                        <p class="text-center mb-0">Health Insurance</p>
+                    </div>
+                    <div class="home-task-content ms-3">
+                        <p class="fs-4">Health Insurance</p>
+                        <p>All students should have health insurance cover. This may be provided by your government
+                            through the public healthcare.... <a href="#" class="text-decoration-none"
+                                style="color: #03686C;">read more</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Last Button -->
+    <div class="container mt-5">
+        <div class="text-center">
+            <button type="button" class="btn btn-more-information">More Information</button>
+        </div>
     </div>
 </section>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'forum/forumbase.html' %}
+{% load static %}
+{% block title %}Message{% endblock %}
+{% block forumcss %}
+<link rel="stylesheet" href="{% static 'css/message/message.css' %}">
+{% endblock %}
+{% block forum %}
+<div class="col-md-6"></div>
+<div class="col-md-3">
+    <div class="card ps-3 pe-3 py-3">
+        <p class="fs-3 mb-3">People</p>
+        <div class="message-user-list">
+            <ul class="list-group">
+                {% for users in user_list %}
+                    <a href="{% url 'single-message' receiver=users.username %}">
+                        <div class="user-pro-pic">
+                            <img src="{{ users.userinfo.profilepic.url }}" alt="">
+                        </div>
+                        <li>{{ users.first_name }} {{ users.last_name }}</li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,63 +1,102 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}Task{% endblock %}
-
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/dashboard/imm-acc-covid.css' %}">
 <style>
-    .card-body{
-        height: 210px;
+    .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .col {
+        width: 40vw;
+        margin-bottom: 10px;
     }
-    .text-justify{
+
+
+    .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .col p {
         text-align: justify;
+        height: 70px;
     }
-    .hidden-card{
-        opacity: 0.5;
+
+    .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .col .fs-5 {
+        font-weight: bold;
+        text-align: left;
+        height: auto;
     }
-    .alert{
-        position: static!important;
+
+    .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .btn {
+        background: rgba(81, 180, 169, 0.07);
+        border: 1px solid #03686C;
+        box-sizing: border-box;
+        border-radius: 10px;
+        color: #03686C;
+        padding: 10px 20px;
+    }
+
+    .row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .btn:hover {
+        background: #03686C;
+        color: #ffffff;
+    }
+
+    .hidden-card .card-body p {
+        text-decoration: line-through !important;
     }
 </style>
 {% endblock %}
-
 {% block content %}
-<section>
+<!-- First Section -->
+<section class="first-section first-section-task py-5">
+    <div class="container my-5 py-5">
+        <h1 class="py-5 text-white my-5">Tasks</h1>
+    </div>
+</section>
+<!-- Second Section -->
+<section class="py-5 second-section">
+    <div class="container">
+        <h1 class="text-center overview">Overview</h1>
+        <p class="text-center overview-description"> Campus Accommodation is university owned and managed apartment
+            style living. Other Housing Options include purpose built student apartment complexes as well as rooms in a
+            private house or apartment.The Accommodation & Community Life office focuses on providing an up-to-date
+            information service for students.</p>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
     <div class="container py-5">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}" role="alert">
+        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
+            role="alert">
             <p class="text-center mb-0">
                 {{ message }}
             </p>
-        </div>        
-        {% endfor %}
-        {% endif %}
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="container py-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-between">
             {% for task in all_tasks %}
             <div class="col">
-                <div class="card shadow-sm 
+                <div class="
                 {% if task.prospective_student_tasks_list.count %}
-                {% for shoron in task.prospective_student_tasks_list.all %}
-                {% if shoron.user.username == user.username %}
+                {% for prospective_student_single_task in task.prospective_student_tasks_list.all %}
+                {% if prospective_student_single_task.user.username == user.username %}
                 hidden-card
                 {% endif %}
                 {% endfor %}
                 {% endif %}">
                     <div class="card-body">
-                        <p class="fs-4">{{ task.task_name }}</p>
-                        <p class="card-text text-justify">{{ task.task_snippet | safe }}</p>
+                        <p class="fs-5">{{ task.task_name }}</p>
+                        {{ task.task_snippet | safe }}
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="{% url 'task-single' slug=task.task_url %}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Start</button>
+                                    <button type="button" class="btn">Read More</button>
                                 </a>
                             </div>
 
                             {% if task.prospective_student_tasks_list.count %}
-                                {% for shoron in task.prospective_student_tasks_list.all %}
-                                    {% if shoron.user.username == user.username %}
-                                    <small class="text-muted">complete</small>
-                                    {% endif %}
-                                {% endfor %}
+                            {% for prospective_student_single_task in task.prospective_student_tasks_list.all %}
+                            {% if prospective_student_single_task.user.username == user.username %}
+                            <small class="text-muted">complete</small>
+                            {% endif %}
+                            {% endfor %}
                             {% endif %}
                         </div>
                     </div>
@@ -67,14 +106,20 @@
         </div>
     </div>
 </section>
+
 {% endblock %}
 
 {% block js %}
 <script>
     let main_btn = document.querySelectorAll('.hidden-card .card-body .btn-group');
-    for (let i = 0; i < main_btn.length; i++){
-    main_btn[i].classList.add('d-none');
-    main_btn[i].innerHTML = '';
+    for (let i = 0; i < main_btn.length; i++) {
+        main_btn[i].classList.add('d-none');
+        main_btn[i].innerHTML = '';
+    }
+    let single_task_short_description = document.querySelectorAll(
+        '.row.row-cols-1.row-cols-sm-2.row-cols-md-3.g-3 .col p');
+    for (let t = 0; t < single_task_short_description.length; t++) {
+        single_task_short_description[t].innerText = single_task_short_description[t].innerText + '...';
     }
 </script>
 {% endblock %}

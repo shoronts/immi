@@ -5,22 +5,54 @@
 
 {% block css %}
 <style>
-    .text-justify{
+    .first-section {
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: 100% 100%;
+        background-position: top center;
+        min-height: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .first-section-task {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/immigration-covid-accom/task.png');
+    }
+
+    .text-justify {
         text-align: justify;
+    }
+
+    .single-task-btn {
+        background: rgba(81, 180, 169, 0.07);
+        border: 1px solid #03686C;
+        box-sizing: border-box;
+        border-radius: 10px;
+        color: #03686C;
+        padding: 10px 30px;
+        text-transform: uppercase;
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- First Section -->
+<section class="first-section first-section-task py-5">
+    <div class="container my-5 py-5">
+        <h1 class="py-5 text-white my-5">Single Task</h1>
+    </div>
+</section>
+<!-- Second Section -->
 <section>
     <div class="container py-5">
-        <div class="card py-5 ps-5 pe-5">
+        <div class="py-5 ps-5 pe-5">
             <h2>{{ single_task.task_name }}</h2>
             <p class="mb-0 text-justify">{{ single_task.task_description | safe }}</p>
             <form action="{% url 'task-single' slug=single_task.task_url %}" method="POST">
                 {% csrf_token %}
                 <div class="text-center">
-                    <button type="submit" class="btn immu-btn mt-5" name="single-task-complete" value="{{ single_task.task_url }}">complete</button>
+                    <button type="submit" class="btn single-task-btn mt-5" name="single-task-complete"
+                        value="{{ single_task.task_url }}">Complete</button>
                 </div>
             </form>
         </div>

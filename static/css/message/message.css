@@ -1,0 +1,174 @@
+/* Message Page */
+
+.message-user-list {
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+.message-user-list .list-group a {
+    padding: 10px 0;
+    text-decoration: none;
+    color: black;
+    display: flex;
+}
+
+.message-user-list .list-group a:hover {
+    color: #51B4A9;
+    background: rgba(81, 180, 169, 0.24);
+    border-left: 2px solid #51B4A9;
+}
+
+.message-user-list .list-group .active {
+    color: #51B4A9;
+    background: rgba(81, 180, 169, 0.24);
+    border-left: 2px solid #51B4A9;
+}
+
+.user-pro-pic {
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.user-pro-pic img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+/* Single Page Message */
+
+.current-user-info {
+    display: flex;
+    align-items: center;
+}
+
+.current-user-info-pic {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+}
+
+.current-user-info-pic img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.users-others-system svg {
+    color: #51B4A9;
+    cursor: pointer;
+}
+
+#single-message-box, #single-group-message-box {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.left-message-box {
+    width: 300px;
+    background: rgba(81, 180, 169, 0.2);
+    border-radius: 10px 10px 10px 0;
+    padding: 5px 20px;
+    margin-left: 10px;
+}
+
+.receiver-pic,
+.sender-user-pic {
+    height: 50px;
+    width: 50px;
+}
+
+.receiver-pic img,
+.sender-user-pic img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.right-message-box {
+    width: 300px;
+    background: #51B4A9;
+    border-radius: 10px 10px 0 10px;
+    padding: 5px 20px;
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+.write-message-box {
+    margin-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.write-message-box svg {
+    cursor: pointer;
+}
+
+.write-message-box .form-control:focus{
+    border: 1px solid #51B4A9;
+}
+
+/* Group Page */
+
+#id_create_group{
+    border-radius: 10px;
+    border: 2px solid #000000;
+}
+
+#id_create_group:focus{
+    border: 2px solid #51B4A9;
+}
+
+.group-member-select-all{
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+}
+
+.group-member-select-all:focus{
+    border: 2px solid #51B4A9;
+    outline: none;
+}
+
+.group-user-pic-box a{
+    position: relative;
+}
+
+.group-user-pro-pic {
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: absolute;
+}
+
+.group-user-pro-pic:nth-child(2){
+    left: 12px;
+}
+
+.group-user-pro-pic:nth-child(3){
+    left: 25px;
+}
+
+.group-user-pro-pic img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    left: 10px;
+}
+
+.group-user-pic-box a li{
+    margin-left: 80px;
+}
+
+.current-user-info{
+    position: relative;
+}
+
+.current-user-info .mb-0{
+    margin-left: 80px;
+}

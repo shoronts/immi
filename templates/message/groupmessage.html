@@ -1,0 +1,61 @@
+{% extends 'forum/forumbase.html' %}
+{% load static %}
+{% block title %}Group Message{% endblock %}
+{% block forumcss %}
+<link rel="stylesheet" href="{% static 'css/message/message.css' %}">
+{% endblock %}
+{% block forum %}
+<div class="col-md-6">
+    <p class="fs-3 mb-3 mt-5">Create Groups</p>
+    <form action="{% url 'group-message' %}" method="post" novalidate {% if group_form.errors %}class="was-validated"{% endif %}>
+        {% csrf_token %}
+        {{ group_form.non_field_errors }}
+        {{ group_form.create_group }}
+        {{ group_form.create_group.errors }}
+        <button style="width: 100%;" name="create-group-request" class="text-center btn new-post-btn mt-3">Create Group</button>
+    </form>
+    <p class="fs-3 mb-3 mt-5">Add Members To Groups</p>
+    <form action="{% url 'group-message' %}" method="post">
+        {% csrf_token %}
+        <select name="members" class="mb-3 group-member-select-all">
+            {% for users in user_list %}
+                <option value="{{ users }}">{{ users.first_name }} {{ users.last_name }}</option>
+            {% endfor %}
+        </select>
+        <select name="groups" class="group-member-select-all">
+            {% for groups in groups_list %}
+                {% for check_user in groups.group_member.all %}
+                    {% if user == check_user %}
+                    <option value="{{ groups.group_name }}">{{ groups.group_name }}</option>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            </select>
+        <button style="width: 100%;" name="add-group-members" class="text-center btn new-post-btn mt-3">Add Member To The Group</button>
+    </form>
+</div>
+<div class="col-md-3">
+    <!-- message users list -->
+    <div class="card ps-3 pe-3 py-3">
+        <p class="fs-3 mb-3">Groups</p>
+        <div class="message-user-list">
+            <ul class="list-group group-user-pic-box">
+                {% for groups in groups_list %}
+                    {% for check_user in groups.group_member.all %}
+                        {% if user == check_user %}
+                            <a href="{% url 'single-group-message' slug=groups.slug %}">
+                                {% for group_users in groups.group_member.all|slice:3 %}
+                                    <div class="group-user-pro-pic">
+                                        <img src="{{ group_users.userinfo.profilepic.url }}" alt="">
+                                    </div>
+                                {% endfor %}
+                                <li>{{ groups.group_name }}</li>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

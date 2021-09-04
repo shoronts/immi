@@ -1,18 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Immigration{% endblock %}
-
 {% block css %}
-
+<link rel="stylesheet" href="{% static 'css/dashboard/imm-acc-covid.css' %}">
 {% endblock %}
-
 {% block content %}
-<section>
+<!-- First Section -->
+<section class="first-section first-section-imm py-5">
+    <div class="container my-5 py-5">
+        <h1 class="py-5 text-white my-5">Visa & Immigration</h1>
+    </div>
+</section>
+<!-- Second Section -->
+<section class="py-5 second-section">
+    <div class="container">
+        <h1 class="text-center overview">Overview</h1>
+        <p class="text-center overview-description">The International Office will be updating this page as we receive updated Immigration registration guidelines from the Irish government for the academic year 2020/2021.  As soon as the information becomes available to us we will update our website accordingly- updated 29th June 2021.</p>
+    </div>
     <div class="container py-5">
-        <h1 class="text-center py-5">
-            Immigration page
-        </h1>
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">From 19th July 2021- EU Digital COVID Certificate (DCC)</p>
+                <p>Government advice to avoid non-essential travel, and related penalties will remain in place until 18 July. As and from 19 July this will be changed to advise citizens to travel safely and in accordance with public health guidance and restrictions.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">11 April 2021 - Designated states: Mandatory Hotel Quarantine</p>
+                <p>New countries to be added from April 15: Kenya, Bangladesh, Maldives, Pakistan, Armenia, Belgium, Bosnia and Herzegovina, France, Italy, Luxembourg, Turkey, Ukraine, Bermuda, Canada, United States of America.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">15th June- Minister Humphreys announces lifting of temporary visa restrictions</p>
+                <p>Restrictions, including the suspension of visa-free travel, lifted for nationals of South Africa, Brazil and other South American countries. Move is in line with the Government’s Resilience.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">23rd March- Mandatory Hotel Quarantine</p>
+                <p>All passengers arriving into Ireland from designated States after 4am on the morning of Friday, 26 March are now required to pre-book accommodation in a designated quarantine facility, and to pre-pay for their stay.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">12 May 2021 - Designated states: Mandatory Hotel Quarantine Exemptions</p>
+                <p>There are now exemptions for fully vaccinates persons. If you are fully vaccinated with an approved vaccine and have the documents to prove that, you do not have to complete</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">5th March 2021 - Mandatory Hotel Quarantine</p>
+                <p>The government intends to implement a system of mandatory quarantine for passengers arriving into Ireland from a list of designated high-risk countries. Under current restrictions,  passengers arriving from these countries must quarantine</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <button type="button" class="btn btn-more-information">Load More</button>
+        </div>
     </div>
 </section>
 {% endblock %}

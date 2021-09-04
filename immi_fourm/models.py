@@ -9,7 +9,6 @@ class forum_post(models.Model):
     user = models.ForeignKey(User, related_name="forum_author", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     post_url = models.SlugField(null=True, blank=True)
-    post_images = models.ImageField(upload_to='blogs_pics', blank = False, null = False)
     post_discription = models.TextField(max_length=1500)
     like = models.ManyToManyField(User, related_name="blogs_post")
     post_date = models.DateTimeField(default=timezone.now)
@@ -27,12 +26,6 @@ class forum_post(models.Model):
     def total_likes(self):
         return self.like.count()
 
-    def snippet(self):
-        return self.post_discription[:250] + ' .....'
-
-    def snippet_title(self):
-        return self.title[:20] + ' ...'
-
     def __str__(self):
         return self.title
 
@@ -48,3 +41,10 @@ class forum_comment(models.Model):
 
     def __str__(self):
         return self.blogs.title
+
+class bookmarks(models.Model):
+    blogs = models.ForeignKey(forum_post, related_name="bookmarks_blogs", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="bookmarks_user", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username

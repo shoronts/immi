@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'immi_user',
     'immi_user_analysis',
     'immi_fourm',
+    'immi_message',
 ]
 
 CKEDITOR_UPLOAD_PATH = "inTextPicture/"

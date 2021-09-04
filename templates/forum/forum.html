@@ -1,228 +1,110 @@
-{% extends 'base.html' %}
+{% extends 'forum/forumbase.html' %}
 {% load static %}
-
-{% block title %}Forum{% endblock %}
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/forum/forum.css' %}">
-{% endblock %}
-
-{% block content %}
-<section>
-    <div class="container py-5">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% endif %}"
-            role="alert">
-            <p class="text-center mb-0">
-                {{ message }}
-            </p>
-        </div>
-        {% endfor %}
-        {% endif %}
-
-        <div class="row my-3 align-items-center">
-            <div class="col-md-2"></div>
-            <div class="col-md-7">
-                <form action="{% url 'forum' %}" method="post" novalidate {% if form.errors %}class="me-1 was-validated"
-                    {% else %}class="me-1" {% endif %}>
-                    {% csrf_token %}
-                    {{ search.non_fiels_errors }}
-                    {{ search.search }}
-                    <div class="search-btn">
-                        <button type="submit" class="btn" name="search-topic">
-                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M11 19.4091C15.4183 19.4091 19 15.8816 19 11.5303C19 7.17897 15.4183 3.65152 11 3.65152C6.58172 3.65152 3 7.17897 3 11.5303C3 15.8816 6.58172 19.4091 11 19.4091Z"
-                                    stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M20.9999 21.3788L16.6499 17.0947" stroke="#333333" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
+{% block title %}All Forum{% endblock %}
+{% block forum %}
+<!-- All Posts -->
+<div class="col-md-6">
+    {% for post in posts %}
+        <div class="main-forum-back">
+            <div class="card forum-card py-4 ps-4 pe-4 mt-5">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                        <div class="post-head-img">
+                            <img src="{{ post.user.userinfo.profilepic.url }}" alt="{{ post.user.username }}">
+                        </div>
+                        <div class="author-details ms-3">
+                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.user.first_name }} {{ post.user.last_name }}</small></p>
+                            <p class="mb-0"><small class="text-muted">{{ post.post_date }}</small></p>
+                        </div>
+                    </div>
+                    <div class="all-tags">
+                        <div class="d-flex">
+                            <p class="me-1">Immigration</p>
+                            <p class="ms-1">Visa</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="fs-5 my-3 long-post-title">{{ post.title }}</p>
+                <p class="card-text text-justify long-post-discription">{{ post.post_discription }}</p>
+                <div class="d-flex justify-content-between">
+                    <div class="like-users-pics d-flex">
+                        {% for pics in post.like.all|slice:3 %}
+                            <div class="single-like-user-pic">
+                                <img src="{{ pics.userinfo.profilepic.url }}" alt="{{ pics.username }}">
+                            </div>
+                        {% endfor %}
+                        <div class="single-like-user-pic single-like-user-pic-value">
+                            <span class="ps-1">+{{ post.like.all.count }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center like post-like"
+                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                             </svg>
-                        </button>
+                            <span class="ms-2 like-count">{{ post.total_likes }}</span>
+                        </div>
+                        <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
+                            post-url="{{ post.post_url }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+                                <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+                            </svg>
+                            <span class="ms-2 total-comment-count">{{ post.forum_comments.count }}</span>
+                        </div>
+                        <div class="ms-5 move-to-bookmarks" post-bookmark-url="{% url 'bookmarks' %}" post-id="{{ post.id }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="ms-5 three-dots">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </div>
                     </div>
-                    {{ search.search.errors }}
-                </form>
+                </div>
             </div>
-            <div class="col-md-3">
-                <div class="create-posts d-flex justify-content-between align-items-center">
-                    <a href="#">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M20 14.66V20C20 20.5304 19.7893 21.0391 19.4142 21.4142C19.0391 21.7893 18.5304 22 18 22H4C3.46957 22 2.96086 21.7893 2.58579 21.4142C2.21071 21.0391 2 20.5304 2 20V6C2 5.46957 2.21071 4.96086 2.58579 4.58579C2.96086 4.21071 3.46957 4 4 4H9.34"
-                                stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M18 2L22 6L12 16H8V12L18 2Z" stroke="#333333" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M1.37603 16.2339V15.9602C1.41619 15.1503 1.67575 14.3656 2.12794 13.687C2.88063 12.8718 3.39588 11.8729 3.61964 10.795C3.61964 9.96188 3.61964 9.11688 3.69241 8.28378C4.06836 4.27302 8.0341 1.5 11.9513 1.5H12.0483C15.9656 1.5 19.9313 4.27302 20.3194 8.28378C20.3921 9.11688 20.3194 9.96188 20.38 10.795C20.6068 11.8754 21.1215 12.8774 21.8717 13.6989C22.3273 14.3715 22.5873 15.1533 22.6236 15.9602V16.222C22.6507 17.3101 22.276 18.371 21.5685 19.2092C20.6337 20.1893 19.3651 20.7991 18.003 20.923C14.0087 21.3515 9.97879 21.3515 5.98453 20.923C4.62393 20.7937 3.3572 20.1849 2.41901 19.2092C1.7225 18.3704 1.3528 17.3157 1.37603 16.2339Z"
-                            stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
-                            d="M8.94385 25.0647C9.56794 25.8481 10.4844 26.355 11.4905 26.4734C12.4965 26.5918 13.5091 26.3118 14.3043 25.6955C14.5488 25.5132 14.7689 25.3013 14.9592 25.0647"
-                            stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <button type="button" class="btn immu-btn" data-bs-toggle="modal" data-bs-target="#addQuestions">Add Question</button>
+            <!-- Comment Sections -->
+            <div class="total-comment-history py-3">
+                <div class="d-flex justify-content-between ps-3 pe-3">
+                    <input type="text" placeholder="Add A Comment" class="form-control comment-input">
+                    <button type="button" class="btn comment-btn" comment-id="{{ post.id }}"
+                        comment-url="{% url 'users_comments' %}">Add Comment</button>
+                </div>
+
+                <div class="all-comments mt-3" id="all-comments-id">
+                    {% for single_comment in post.forum_comments.all|dictsortreversed:'comment_date' %}
+                        <div class="comment py-3 ps-5 pe-5">
+                            <div class="d-flex">
+                                <div class="post-head-img">
+                                    <img src="{{ single_comment.person.userinfo.profilepic.url }}"
+                                        alt="{{ single_comment.person.username }}">
+                                </div>
+                                <div class="author-details ms-3">
+                                    <p class="mb-0"><small
+                                            class="text-muted text-capitalize">{{ single_comment.person.username }}</small>
+                                    </p>
+                                    <p class="mb-0"><small class="text-muted">{{ single_comment.comment_date }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="my-3 text-justify">{{ single_comment.comment_body }}</p>
+                            <div class="d-flex align-items-center comment-like"
+                                comment-like-url="{% url 'users_comment_likes' %}"
+                                comment-id="{{ single_comment.id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                                <span
+                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-7">
-                {% for post in posts %}
-                    <div class="main-forum-back">
-                        <div class="card forum-card py-4 ps-4 pe-4 mt-5">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
-                                    <div class="post-head-img">
-                                        <img src="{{ post.user.userinfo.profilepic.url }}" alt="{{ post.user.username }}">
-                                    </div>
-                                    <div class="author-details ms-3">
-                                        <p class="mb-0"><small class="text-muted text-capitalize">{{ post.user }}</small>
-                                        </p>
-                                    </div>
-                                </div>
-                                <p class="mb-0"><small class="text-muted">{{ post.user.userinfo.user_type }}</small></p>
-                                <p class="mb-0"><small class="text-muted">{{ post.post_date }}</small></p>
-                            </div>
-                            <p class="fs-5 my-3 short-post-title">{{ post.snippet_title }}</p>
-                            <p class="fs-5 my-3 long-post-title">{{ post.title }}</p>
-                            <p class="card-text text-justify short-post-discription">{{ post.snippet }}</p>
-                            <p class="card-text text-justify long-post-discription">{{ post.post_discription }}</p>
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
-                                    <div class="d-flex align-items-center like post-like"
-                                        post-like-url="{% url 'users_likes' %}" post-id="{{ post.id }}">
-                                        <svg width="27" height="27" viewBox="0 0 27 27" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M7.24821 25.8199H3.49928C2.83643 25.8199 2.20073 25.5658 1.73202 25.1133C1.26332 24.6608 1 24.0471 1 23.4073V14.9629C1 14.323 1.26332 13.7093 1.73202 13.2568C2.20073 12.8044 2.83643 12.5502 3.49928 12.5502H7.24821M15.9957 10.1375V5.31214C15.9957 4.35231 15.6007 3.4318 14.8977 2.7531C14.1946 2.0744 13.2411 1.69312 12.2468 1.69312L7.24821 12.5502V25.8199H21.3442C21.9469 25.8265 22.5318 25.6226 22.9911 25.2457C23.4504 24.8689 23.7531 24.3445 23.8435 23.7692L25.568 12.9121C25.6223 12.5663 25.5982 12.2132 25.4972 11.8774C25.3961 11.5415 25.2207 11.2308 24.983 10.9669C24.7452 10.703 24.4509 10.4921 24.1203 10.3489C23.7898 10.2057 23.431 10.1335 23.0687 10.1375H15.9957Z"
-                                                stroke="#023436" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                        <span class="ms-2 mt-2 like-count">{{ post.total_likes }}</span>
-                                    </div>
-                                    <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
-                                        post-url="{{ post.post_url }}">
-                                        <svg class="mt-2" width="27" height="27" viewBox="0 0 27 27" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M19 9.50003C19.0034 10.8199 18.6951 12.1219 18.1 13.3C17.3944 14.7118 16.3098 15.8992 14.9674 16.7293C13.6251 17.5594 12.0782 17.9994 10.5 18C9.18013 18.0035 7.87812 17.6951 6.7 17.1L1 19L2.9 13.3C2.30493 12.1219 1.99656 10.8199 2 9.50003C2.00061 7.92179 2.44061 6.37488 3.27072 5.03258C4.10083 3.69028 5.28825 2.6056 6.7 1.90003C7.87812 1.30496 9.18013 0.996587 10.5 1.00003H11C13.0843 1.11502 15.053 1.99479 16.5291 3.47089C18.0052 4.94699 18.885 6.91568 19 9.00003V9.50003Z"
-                                                stroke="#023436" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                        <span class="ms-2 mt-2 total-comment-count">{{ post.forum_comments.count }}</span>
-                                    </div>
-                                </div>
-                                <p class="mb-0 expand" style="cursor: pointer;">Expand</p>
-                            </div>
-                        </div>
-
-                        <div class="total-comment-history py-3">
-                            <div class="d-flex justify-content-between ps-3 pe-3">
-                                <input type="text" placeholder="Add A Comment" class="form-control comment-input">
-                                <button type="button" class="btn comment-btn" comment-id="{{ post.id }}"
-                                    comment-url="{% url 'users_comments' %}">Add Comment</button>
-                            </div>
-
-                            <div class="all-comments" id="all-comments-id">
-                                {% for single_comment in post.forum_comments.all|dictsortreversed:'comment_date' %}
-                                    <div class="comment py-3 ps-5 pe-5">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex">
-                                                <div class="post-head-img">
-                                                    <img src="{{ single_comment.person.userinfo.profilepic.url }}"
-                                                        alt="{{ single_comment.person.username }}">
-                                                </div>
-                                                <div class="author-details ms-3">
-                                                    <p class="mb-0"><small
-                                                            class="text-muted text-capitalize">{{ single_comment.person.username }}</small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p class="mb-0"><small
-                                                    class="text-muted">{{ single_comment.person.userinfo.user_type }}</small>
-                                            </p>
-                                            <p class="mb-0"><small class="text-muted">{{ single_comment.comment_date }}</small>
-                                            </p>
-                                        </div>
-                                        <p class="my-3 text-justify">{{ single_comment.comment_body }}</p>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex align-items-center comment-like"
-                                                comment-like-url="{% url 'users_comment_likes' %}"
-                                                comment-id="{{ single_comment.id }}">
-                                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M7.24821 25.8199H3.49928C2.83643 25.8199 2.20073 25.5658 1.73202 25.1133C1.26332 24.6608 1 24.0471 1 23.4073V14.9629C1 14.323 1.26332 13.7093 1.73202 13.2568C2.20073 12.8044 2.83643 12.5502 3.49928 12.5502H7.24821M15.9957 10.1375V5.31214C15.9957 4.35231 15.6007 3.4318 14.8977 2.7531C14.1946 2.0744 13.2411 1.69312 12.2468 1.69312L7.24821 12.5502V25.8199H21.3442C21.9469 25.8265 22.5318 25.6226 22.9911 25.2457C23.4504 24.8689 23.7531 24.3445 23.8435 23.7692L25.568 12.9121C25.6223 12.5663 25.5982 12.2132 25.4972 11.8774C25.3961 11.5415 25.2207 11.2308 24.983 10.9669C24.7452 10.703 24.4509 10.4921 24.1203 10.3489C23.7898 10.2057 23.431 10.1335 23.0687 10.1375H15.9957Z"
-                                                        stroke="#023436" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" />
-                                                </svg>
-                                                <span
-                                                    class="ms-2 mt-2 comment-like-count">{{ single_comment.total_comment_likes }}</span>
-                                            </div>
-                                            <p class="mb-0" style="cursor: pointer;">Expand</p>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-</section>
-
-<section>
-    <div class="container">
-        <form action="{% url 'forum' %}" method="POST">
-            {% csrf_token %}
-
-            <div class="modal fade" id="addQuestions" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content modal-content-add-questions">
-                    <div class="modal-header py-4">
-                      <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-question-header">
-                        <div class="d-flex align-items-center">
-                            <div class="post-head-img">
-                                <img src="{{ user.userinfo.profilepic.url }}" alt="{{ user.username }}">
-                            </div>
-                            <div class="author-details ms-3">
-                                <p class="mb-0"><small class="text-muted text-capitalize">{{ user.username }}</small>
-                                </p>
-                            </div>
-                        </div>
-
-                        <select name="ask_type" class="ask-type">
-                          <option value="ask anonymously">ask anonymously</option>
-                        </select>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-floating">
-                            <textarea class="form-control form-control-add-question" placeholder="Start your questions with  your questions wtih “What”, “How”, “Why”, e.t.c  " style="height: 400px"></textarea>
-                            <label>Start your questions with  your questions wtih “What”, “How”, “Why”, e.t.c  </label>
-                          </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                      <button type="submit" class="btn immu-btn">Add Question</button>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
-        </form>
-    </div>
-</section>
-{% endblock %}
-
-{% block js %}
-<script src="{% static 'js/forum/forum.js' %}"></script>
+    {% endfor %}
+</div>
 {% endblock %}

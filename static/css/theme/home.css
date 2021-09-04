@@ -1,0 +1,45 @@
+.homeFirstSec {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/home/HeroImage.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-position: top center;
+    min-height: 100%;
+    background-repeat: no-repeat;
+}
+
+.btn-learn {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+.home-header {
+    width: 650px;
+    margin: 0 auto;
+}
+
+.home-task-image {
+    min-width: 200px;
+    min-height: 150%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+.home-task-image p {
+    color: #FFFFFF;
+    padding: 70px 0;
+}
+
+.home-task-content {
+    margin-top: 10px;
+}
+
+.home-task-content p {
+    text-align: justify;
+}

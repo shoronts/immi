@@ -1,0 +1,55 @@
+.first-section {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-position: top center;
+    min-height: 100%;
+    background-repeat: no-repeat;
+}
+
+.first-section-imm {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/immigration-covid-accom/immigration.png');
+}
+
+.first-section-acc {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/immigration-covid-accom/accomodation.png');
+}
+
+.first-section-covid {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/immigration-covid-accom/covid.png');
+}
+
+.first-section-task {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('/static/img/immigration-covid-accom/task.png');
+}
+
+.overview {
+    color: #03686C;
+}
+
+.overview-description {
+    width: 60vw;
+    margin: 0 auto;
+}
+
+.second-section .container.py-5 .col-md-5 .fs-5 {
+    font-weight: bold;
+}
+
+.second-section .container.py-5 .col-md-5 p {
+    text-align: justify;
+}
+
+.second-section .container.py-5 .col-md-5 .btn {
+    background: rgba(81, 180, 169, 0.07);
+    border: 1px solid #03686C;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: #03686C;
+}
+
+.second-section .container.py-5 .col-md-5 .btn:hover {
+    background: #03686C;
+    color: #ffffff;
+}

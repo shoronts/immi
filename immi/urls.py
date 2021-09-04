@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('immi_user.urls')),
     path('', include('immi_user_analysis.urls')),
     path('', include('immi_fourm.urls')),
+    path('', include('immi_message.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

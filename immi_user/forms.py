@@ -7,7 +7,7 @@ from django.contrib.auth.hashers import check_password
 
 # Login Form
 class loginForm(forms.Form):
-    userName = forms.CharField(label = "Your Username?",
+    userName = forms.CharField(label = "Your Username",
         error_messages = {'required' : 'Username required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -18,7 +18,7 @@ class loginForm(forms.Form):
             )
         )
 
-    password = forms.CharField(label = "Your Password?",
+    password = forms.CharField(label = "Your Password",
         min_length = 8,
         max_length = 50,
         error_messages = {'required' : 'Password required.'},
@@ -55,7 +55,7 @@ class loginForm(forms.Form):
 # Registeration Form
 class RegisterForm(forms.Form):
 
-    firstName = forms.CharField(label = "What's Your First Name?",
+    firstName = forms.CharField(label = "First Name",
             error_messages = {'required' : 'First Name Required.'},
             max_length = 100,
             widget = forms.TextInput(
@@ -66,7 +66,7 @@ class RegisterForm(forms.Form):
                 )
             )
         
-    lastName = forms.CharField(label = "What's Your Last Name?",
+    lastName = forms.CharField(label = "Last Name",
         error_messages = {'required' : 'Last Name Required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -77,7 +77,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    userName = forms.CharField(label = "What's Your Username?",
+    userName = forms.CharField(label = "Username",
         error_messages = {'required' : 'Username Required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -87,7 +87,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    email = forms.EmailField(label = "What's Your Email?",
+    email = forms.EmailField(label = "Email",
         help_text = 'Please use a valid Email.',
         error_messages = {'required' : 'Valid Email Required.'},
         max_length = 100,
@@ -98,7 +98,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    password = forms.CharField(label = "What's Your Password?",
+    password = forms.CharField(label = "Password",
         error_messages = {'required' : 'Strong Password Required.'},
         min_length = 8,
         help_text = 'Minimum 8 Characters..',
@@ -110,7 +110,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    confirmPassword = forms.CharField(label = "Confirm Your Password?",
+    confirmPassword = forms.CharField(label = "Confirm Your Password",
         error_messages = {'required' : 'Strong Password Required.'},
         min_length = 8,
         help_text = 'Minimum 8 Characters..',
@@ -122,7 +122,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    nationality = forms.CharField(label = "What’s your nationality?",
+    nationality = forms.CharField(label = "What’s your nationality",
         error_messages = {'required' : 'nationality Required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -132,7 +132,7 @@ class RegisterForm(forms.Form):
             )
         )
 
-    program = forms.CharField(label = "What’s your Program ?",
+    program = forms.CharField(label = "What’s your Program ",
         error_messages = {'required' : 'program Required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -244,7 +244,7 @@ class passChangeForm(PasswordChangeForm):
 # Profile Edit Form
 class profile_change_form(forms.Form):
 
-    firstName = forms.CharField(label = "What's Your First Name?",
+    firstName = forms.CharField(label = "First Name",
             error_messages = {'required' : 'First Name Required.'},
             max_length = 100,
             widget = forms.TextInput(
@@ -255,7 +255,7 @@ class profile_change_form(forms.Form):
                 )
             )
         
-    lastName = forms.CharField(label = "What's Your Last Name?",
+    lastName = forms.CharField(label = "Last Name",
         error_messages = {'required' : 'Last Name Required.'},
         max_length = 100,
         widget = forms.TextInput(
@@ -266,7 +266,7 @@ class profile_change_form(forms.Form):
             )
         )
         
-    email = forms.CharField(label = "What's Your New Email?", required=False,
+    email = forms.CharField(label = "New Email", required=False,
         error_messages = {'required' : 'New Email Required.'},
         max_length = 100,
         widget = forms.EmailInput(
@@ -277,7 +277,7 @@ class profile_change_form(forms.Form):
             )
         )
     
-    profile_pic = forms.CharField(label= "Choose Your Profile Pic?", required=False,
+    profile_pic = forms.CharField(label= "Choose Your Profile Pic", required=False,
         widget = forms.FileInput(
             attrs = {
                 'class' : 'form-control'

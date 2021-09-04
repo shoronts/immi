@@ -1,18 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}Accommodation{% endblock %}
-
 {% block css %}
-
+<link rel="stylesheet" href="{% static 'css/dashboard/imm-acc-covid.css' %}">
 {% endblock %}
-
 {% block content %}
-<section>
+<!-- First Section -->
+<section class="first-section first-section-acc py-5">
+    <div class="container my-5 py-5">
+        <h1 class="py-5 text-white my-5">Accommodation</h1>
+    </div>
+</section>
+<!-- Second Section -->
+<section class="py-5 second-section">
+    <div class="container">
+        <h1 class="text-center overview">Overview</h1>
+        <p class="text-center overview-description"> Campus Accommodation is university owned and managed apartment style living. Other Housing Options include purpose built student apartment complexes as well as rooms in a private house or apartment.The Accommodation & Community Life office focuses on providing an up-to-date information service for students.</p>
+    </div>
     <div class="container py-5">
-        <h1 class="text-center py-5">
-            Accommodation page
-        </h1>
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">Office of Accommodation & Community Life</p>
+                <p>What is the Office of Accommodation & Community Life? The Office of Accommodation & Community Life is fully committed to the enhancement of the Student Experience in University College.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">Private Housing Options</p>
+                <p>The University is situated in a residential area where there is a wide variety of private housing options for individuals or groups.  Students can rent a room in a landlord owned student house or a room in a house that is occupied by the owner (known as Digs).</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">Campus Accommodation</p>
+                <p>Campus Accommodation offer several different residences near the main UCC campus. These residences are owned and managed by UCC, and are specifically designed for student life, offering security, a reception service and other amenities.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">Campus Accommodation</p>
+                <p>Campus Accommodation offer several different residences near the main UCC campus. These residences are owned and managed by UCC, and are specifically designed for student life, offering security, a reception service and other amenities.</p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-5">
+                <p class="fs-5">Privately Owned Student Apartment Complexes</p>
+                <p>We have a wide range of purpose built student accommodation (apartment style), which is privately owned, but caters predominantly to UCC students. We recommend that students consider all options when investigating accommodation needs. </p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <p class="fs-5">Privately Owned Student Apartment Complexes</p>
+                <p>We have a wide range of purpose built student accommodation (apartment style), which is privately owned, but caters predominantly to UCC students. We recommend that students consider all options when investigating accommodation needs. </p>
+                <button type="button" class="btn">Read More</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <button type="button" class="btn btn-more-information">Load More</button>
+        </div>
     </div>
 </section>
 {% endblock %}
