@@ -5,7 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.crypto import get_random_string
 
 
-class users_task(models.Model):
+class UserTask(models.Model):
 
     task_name = models.CharField(max_length=255)
     task_url = models.SlugField(blank=True, null=True)
@@ -28,8 +28,9 @@ class users_task(models.Model):
     def __str__(self):
         return self.task_name
 
-class user_task_status(models.Model):
-    task = models.ForeignKey(users_task, related_name="prospective_student_tasks_list", on_delete=models.CASCADE)
+
+class UserTaskStatus(models.Model):
+    task = models.ForeignKey(UserTask, related_name="prospective_student_tasks_list", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="prospective_student_tasks", on_delete=models.CASCADE)
 
     def __str__(self):

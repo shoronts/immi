@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <p class="fs-5 my-3 long-post-title">{{ post.title }}</p>
-                <p class="card-text text-justify long-post-discription">{{ post.post_discription }}</p>
+                <p class="card-text text-justify long-post-discription">{{ post.post_description }}</p>
                 <div class="d-flex justify-content-between">
                     <div class="like-users-pics d-flex">
                         {% for pics in post.like.all|slice:3 %}
@@ -42,7 +42,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                             </svg>
-                            <span class="ms-2 like-count">{{ post.total_likes }}</span>
+                            <span class="ms-2 like-count">{{ post.total_likes.count }}</span>
                         </div>
                         <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
                             post-url="{{ post.post_url }}">
@@ -64,8 +64,8 @@
                                     </svg>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{% url 'edit-single-post' pk=post.id slug=post.post_url %}">Edit Post</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'delete-single-post' pk=post.id slug=post.post_url %}">Delete Post</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'edit-single-post' pk=post.id %}">Edit Post</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'delete-single-post' pk=post.id %}">Delete Post</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                                     <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                 </svg>
                                 <span
-                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes }}</span>
+                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes.count }}</span>
                             </div>
                         </div>
                         <hr>

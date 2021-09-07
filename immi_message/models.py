@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 
 
-class single_message(models.Model):
+class SingleMessage(models.Model):
     sender = models.CharField( max_length=255)
     receiver = models.CharField( max_length=255)
     message = models.TextField(blank=True, null=True)
@@ -13,7 +13,7 @@ class single_message(models.Model):
         return f"{self.sender} message to {self.receiver}"
 
 
-class groups_list(models.Model):
+class GroupsList(models.Model):
     group_name = models.CharField(max_length=255)
     slug = models.SlugField(null=True, blank=True)
     group_member = models.ManyToManyField(User, related_name="group_members_list")
@@ -26,7 +26,7 @@ class groups_list(models.Model):
         return self.group_name
 
 
-class group_message(models.Model):
+class GroupMessage(models.Model):
     group = models.CharField( max_length=255)
     sender = models.CharField( max_length=255)
     message = models.TextField(blank=True, null=True)

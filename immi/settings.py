@@ -3,10 +3,10 @@ from env import *
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = env_config.SECRET_KEY
+SECRET_KEY = EnvConfig.SECRET_KEY
 
-DEBUG = env_config.DEBUG
-ALLOWED_HOSTS = env_config.ALLOWED_HOSTS
+DEBUG = EnvConfig.DEBUG
+ALLOWED_HOSTS = EnvConfig.ALLOWED_HOSTS
 
 
 # Application definition
@@ -46,7 +46,7 @@ ROOT_URLCONF = 'immi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR / 'templates' ],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +132,6 @@ LOGIN_REDIRECT_URL = 'forum'
 LOGIN_URL = 'login'
 
 
-
 # CKEditor Configuration Settings
 CKEDITOR_CONFIGS = {
     'default': {
@@ -145,9 +144,9 @@ CKEDITOR_CONFIGS = {
 
 
 # EMAIL Configurations
-EMAIL_HOST = env_config.EMAIL_HOST
-EMAIL_PORT = env_config.EMAIL_PORT
-EMAIL_HOST_USER = env_config.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = env_config.EMAIL_HOST_PASSWORD
-EMAIL_USE_TLS = env_config.EMAIL_USE_TLS
-EMAIL_USE_SSL = env_config.EMAIL_USE_SSL
+EMAIL_HOST = EnvConfig.EMAIL_HOST
+EMAIL_PORT = EnvConfig.EMAIL_PORT
+EMAIL_HOST_USER = EnvConfig.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EnvConfig.EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = EnvConfig.EMAIL_USE_TLS
+EMAIL_USE_SSL = EnvConfig.EMAIL_USE_SSL

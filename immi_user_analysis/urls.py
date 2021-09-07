@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import immi_user_task as dashboard
+from .views import ImmiUserTask
 
 
 urlpatterns = [
-    path('task/', dashboard.task, name='task'),
-    path('task/<slug>/', dashboard.single_task, name='task-single'),
+    path('task/', ImmiUserTask.task, name='task'),
+    path('task/<slug>/', ImmiUserTask.single_task, name='task-single'),
 ]

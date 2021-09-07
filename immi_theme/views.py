@@ -2,51 +2,47 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
-from immi_fourm.models import forum_post
-from immi_theme.models import notification
+from immi_theme.models import Notification
 
 
-class immu_theme():
+class ImmiTheme:
     
-    def home(request):
+    def home(self):
         contex = {
-            'notification': notification.objects.all().order_by('-date')
+            'notification': Notification.objects.all().order_by('-date')
         }
-        return render(request, 'theme/home.html', contex)
+        return render(self, 'theme/home.html', contex)
     
     # Users Accommodation Page
     @login_required
-    def accommodation(request):
+    def accommodation(self):
         contex = {
-            'notification': notification.objects.all().order_by('-date')
+            'notification': Notification.objects.all().order_by('-date')
         }
-        return render(request, 'dashboard/accommodation.html', contex)
-
+        return render(self, 'dashboard/accommodation.html', contex)
 
     # Users Immigration Page
     @login_required
-    def immigration(request):
+    def immigration(self):
         contex = {
-            'notification': notification.objects.all().order_by('-date')
+            'notification': Notification.objects.all().order_by('-date')
         }
-        return render(request, 'dashboard/immigration.html', contex)
+        return render(self, 'dashboard/immigration.html', contex)
 
     # Covid Info Page
     @login_required
-    def covid_info(request):
+    def covid_info(self):
         contex = {
-            'notification': notification.objects.all().order_by('-date')
+            'notification': Notification.objects.all().order_by('-date')
         }
-        return render(request, 'dashboard/covid-info.html', contex)
+        return render(self, 'dashboard/covid-info.html', contex)
 
     # Notifications
     @login_required
-    def notifications(request):
-        if request.method == 'GET' and request.is_ajax():
-            all_notification = notification.objects.filter(user=request.user.username)
+    def notifications(self):
+        if self.method == 'GET' and self.is_ajax():
+            all_notification = Notification.objects.filter(user=self.user.username)
             for x in all_notification:
                 x.view = True
                 x.save()
-            return JsonResponse({'results':'done'})
-        else:
-            pass
+            return JsonResponse({'results': 'done'})

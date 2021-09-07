@@ -1,51 +1,54 @@
 from django import forms
-from .models import forum_post
+from .models import ForumPost
 
 
-class single_post_form(forms.ModelForm):
+class SinglePostForm(forms.ModelForm):
     class Meta:
-        model = forum_post
-        fields = ['title', 'post_discription']
+        model = ForumPost
+        fields = ['title', 'post_description']
 
         widgets = {
-            'title' : forms.TextInput(attrs = {'class':'form-control', 'placeholder': 'Post Title'}),
-            'post_discription' : forms.Textarea(attrs = {'class':'form-control form-control-add-question', 'placeholder': 'Post Details', 'style': 'height:300px'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post Title'}),
+            'post_description': forms.Textarea(attrs={'class': 'form-control form-control-add-question',
+                                                      'placeholder': 'Post details', 'style': 'height:300px'}),
             }
 
         error_messages = {
-            'title' : {'required' : "Title Required."},
-            'post_discription' : {'required' : "Descriptions Required."},
+            'title': {'required': "Title Required."},
+            'post_description': {'required': "Descriptions Required."},
         }
 
-class edit_single_post(forms.Form):
+
+class EditSinglePost(forms.Form):
     title = forms.CharField(
-        error_messages = {'required' : 'Title Required.'},
+        error_messages={'required': 'Title Required.'},
         widget=forms.TextInput(
-            attrs = {
-                'class':'form-control',
+            attrs={
+                'class': 'form-control',
                 'placeholder': 'Post Title'
                 }
             )
         )
 
-    post_discription = forms.CharField(
-        error_messages = {'required' : 'Discription Required.'},
-        widget = forms.Textarea(
-                attrs = {
-                'class':'form-control',
-                'style': 'height:300px'
+    post_description = forms.CharField(
+        error_messages={'required': 'Discription Required.'},
+        widget=forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'style': 'height:300px'
                 }
             )
         )
 
-class search_form(forms.Form):
+
+class SearchForm(forms.Form):
     search = forms.CharField(
-        error_messages = {'required' : 'Topics Required.'},
-        max_length = 100,
-        widget = forms.TextInput(
-            attrs = {
-                'placeholder' : 'Search For Topics',
-                'class' : 'form-control form-control-update'
+        error_messages={'required': 'Topics Required.'},
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                    'placeholder': 'Search For Topics',
+                    'class': 'form-control form-control-update'
                 }
             )
         )

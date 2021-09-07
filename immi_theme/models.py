@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class notification(models.Model):
+class Notification(models.Model):
     name = models.CharField(max_length=255)
     user = models.CharField(max_length=255)
     held_by = models.CharField(max_length=255)

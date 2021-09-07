@@ -10,10 +10,10 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <div class="post-head-img">
-                            <img src="{{ post.user.userinfo.profilepic.url }}" alt="{{ post.user.username }}">
+                            <img src="{{ post.blogs.user.userinfo.profilepic.url }}" alt="{{ post.blogs.user.username }}">
                         </div>
                         <div class="author-details ms-3">
-                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.user.first_name }} {{ post.user.last_name }}</small></p>
+                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.blogs.user.first_name }} {{ post.blogs.user.last_name }}</small></p>
                             <p class="mb-0"><small class="text-muted">{{ post.blogs.post_date }}</small></p>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <p class="fs-5 my-3 long-post-title">{{ post.blogs.title }}</p>
-                <p class="card-text text-justify long-post-discription">{{ post.blogs.post_discription }}</p>
+                <p class="card-text text-justify long-post-discription">{{ post.blogs.post_description }}</p>
                 <div class="d-flex justify-content-between">
                     <div class="like-users-pics d-flex">
                         {% for pics in post.blogs.like.all|slice:3 %}
@@ -39,11 +39,11 @@
                     </div>
                     <div class="d-flex">
                         <div class="d-flex align-items-center like post-like"
-                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.id }}">
+                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.blogs.id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                             </svg>
-                            <span class="ms-2 like-count">{{ post.blogs.total_likes }}</span>
+                            <span class="ms-2 like-count">{{ post.blogs.total_likes.count }}</span>
                         </div>
                         <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
                             post-url="{{ post.post_url }}">
@@ -97,7 +97,7 @@
                                     <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                 </svg>
                                 <span
-                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes }}</span>
+                                    class="ms-2 comment-like-count">{{ single_comment.total_comment_likes.count }}</span>
                             </div>
                         </div>
                         <hr>

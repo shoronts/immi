@@ -1,44 +1,46 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.models import auth, User
 from django.contrib.auth.decorators import login_required
 
 from immi_user.models import UserInfo
-from immi_theme.models import notification
+from immi_theme.models import Notification
 
-from .models import users_task, user_task_status
+from .models import UserTask, UserTaskStatus
 
 
-class immi_user_task():
+class ImmiUserTask:
 
     # Users Task Page
     @login_required
-    def task(request):
-        all_tasks = users_task.objects.all()
-        return render(request, 'dashboard/task.html', {'all_tasks' : all_tasks,'notification': notification.objects.all()})
+    def task(self):
+        all_tasks = UserTask.objects.all()
+        return render(self, 'dashboard/task.html',
+                      {'all_tasks': all_tasks, 'notification': Notification.objects.all()})
 
     # Single Task Page
     @login_required
-    def single_task(request, slug):
-        single_tasks = get_object_or_404(users_task, task_url=slug)
-        if request.method == 'POST' and slug== request.POST['single-task-complete']:
-            all_complete_task = user_task_status.objects.all()
+    def single_task(self, slug):
+        single_tasks = get_object_or_404(UserTask, task_url=slug)
+        if self.method == 'POST' and slug == self.POST['single-task-complete']:
+            all_complete_task = UserTaskStatus.objects.all()
             for find_complete_task in all_complete_task:
-                if find_complete_task.user == request.user and find_complete_task.task == single_tasks:
-                    messages.error(request, 'You have already completed this task.')
+                if find_complete_task.user == self.user and find_complete_task.task == single_tasks:
+                    messages.error(self, 'You have already completed this task.')
                     return redirect('task')
             else:
-                task_complete_by = user_task_status(user=request.user, task=single_tasks)
+                task_complete_by = UserTaskStatus(user=self.user, task=single_tasks)
                 task_complete_by.save()
-                total_task = users_task.objects.all()
-                total_completed_task = user_task_status.objects.filter(user=request.user)
+                total_task = UserTask.objects.all()
+                total_completed_task = UserTaskStatus.objects.filter(user=self.user)
                 if len(total_task) == len(total_completed_task):
-                    change_user_type = UserInfo.objects.get(user=request.user.id)
+                    change_user_type = UserInfo.objects.get(user=self.user.id)
                     change_user_type.user_type = 'Current Student'
                     change_user_type.save()
-                    messages.success(request, 'Now you are a Current Student. Please change your email to the official email.')
+                    messages.success(self, 'Now you are a Current Student. '
+                                           'Please change your email to the official email.')
                     return redirect('task')
                 else:
-                    messages.success(request, 'Wellcome! You have completed a task.')
+                    messages.success(self, 'Welcome! You have completed a task.')
                     return redirect('task')
-        return render(request, 'dashboard/single-task.html', {'notification': notification.objects.all().order_by('-date')})
+        return render(self, 'dashboard/single-task.html',
+                      {'notification': Notification.objects.all().order_by('-date')})

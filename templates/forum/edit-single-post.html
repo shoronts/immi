@@ -19,21 +19,21 @@
 
 {% block forum %}
 <div class="col-md-6 mt-5">
-    <form action="{% url 'edit-single-post' pk=edit_post.pk  slug=edit_post.post_url %}" method="POST" novalidate
+    <form action="{% url 'edit-single-post' pk=edit_post.pk %}" method="POST" novalidate
     {% if form.errors %}class="was-validated" {% endif %}>
     {% csrf_token %}
     {{ form.non_field_errors }}
 
     <div class="form-floating mb-3">
         <input type="text" name="title" class="form-control" value="{{ edit_post.title }}" placeholder="Post Title" required="" id="id_title">
-        <label for="floatingInput">Post Title</label>
+        <label for="id_title">Post Title</label>
         {{ form.title.errors }}
     </div>
 
     <div class="form-floating">
-        <textarea name="post_discription" cols="40" rows="10" class="form-control" style="height:300px" required="" id="id_post_discription">{{ edit_post.post_discription }}</textarea>
-        <label for="floatingTextarea2">Post Descriptions (maximum 1500 character)</label>
-        {{ form.post_discription.errors }}
+        <textarea name="post_description" cols="40" rows="10" class="form-control" style="height:300px" required="" id="id_post_description">{{ edit_post.post_description }}</textarea>
+        <label for="id_post_description">Post Descriptions (maximum 1500 character)</label>
+        {{ form.post_description.errors }}
     </div>
 
     <div class="text-center mt-5">
