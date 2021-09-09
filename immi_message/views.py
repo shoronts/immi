@@ -60,7 +60,7 @@ class ImmiMessage:
 
     # Group Page
     def group_message(self):
-        if self.method == 'POST' and 'create-group-self' in self.POST:
+        if self.method == 'POST' and 'create-group-request' in self.POST:
             group_form = create_group(self.POST)
             if group_form.is_valid():
                 new_group = group_form.cleaned_data['create_group']
@@ -81,7 +81,7 @@ class ImmiMessage:
                     return redirect('group-message')
             contex = {
                     'new_post_form': SinglePostForm(),
-                    'search': SearchForm(),
+                    'search': create_group(self.POST),
                     'group_form': group_form,
                     'groups_list': GroupsList.objects.all(),
                     'user_list': User.objects.exclude(username=self.user.username).all(),

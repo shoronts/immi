@@ -14,8 +14,7 @@ class ImmiUserTask:
     @login_required
     def task(self):
         all_tasks = UserTask.objects.all()
-        return render(self, 'dashboard/task.html',
-                      {'all_tasks': all_tasks, 'notification': Notification.objects.all()})
+        return render(self, 'dashboard/task.html', {'all_tasks': all_tasks, 'notification': Notification.objects.all()})
 
     # Single Task Page
     @login_required
@@ -36,11 +35,14 @@ class ImmiUserTask:
                     change_user_type = UserInfo.objects.get(user=self.user.id)
                     change_user_type.user_type = 'Current Student'
                     change_user_type.save()
-                    messages.success(self, 'Now you are a Current Student. '
-                                           'Please change your email to the official email.')
+                    messages.success(self, 'Now you are a Current Student. Please change your email to the official email.')
                     return redirect('task')
                 else:
                     messages.success(self, 'Welcome! You have completed a task.')
                     return redirect('task')
-        return render(self, 'dashboard/single-task.html',
-                      {'notification': Notification.objects.all().order_by('-date')})
+        else:
+            contex = {
+                'single_task': single_tasks,
+                'notification': Notification.objects.all().order_by('-date')
+            }
+        return render(self, 'dashboard/single-task.html', contex)

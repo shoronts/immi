@@ -17,11 +17,13 @@
     <p class="fs-3 mb-3 mt-5">Add Members To Groups</p>
     <form action="{% url 'group-message' %}" method="post">
         {% csrf_token %}
+        <label for="">Users List</label>
         <select name="members" class="mb-3 group-member-select-all">
             {% for users in user_list %}
                 <option value="{{ users }}">{{ users.first_name }} {{ users.last_name }}</option>
             {% endfor %}
         </select>
+        <label for="">Group List</label>
         <select name="groups" class="group-member-select-all">
             {% for groups in groups_list %}
                 {% for check_user in groups.group_member.all %}
