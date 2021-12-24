@@ -3,7 +3,7 @@ from env import *
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = EnvConfig.SECRET_KEY
+SECRET_KEY = 'django-insecure-c@j0d!3(k9#=-km%18h4$3$^z(i7%@c7yy$2e+6!whu@j456qk'
 
 DEBUG = EnvConfig.DEBUG
 ALLOWED_HOSTS = EnvConfig.ALLOWED_HOSTS
@@ -63,26 +63,12 @@ WSGI_APPLICATION = 'immi.wsgi.application'
 
 
 # Database
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#             },
-#         'NAME': env_config.DB_NAME,
-#         'USER': env_config.DB_USER,
-#         'PASSWORD': env_config.DB_PASSWORD,
-#         'HOST': env_config.DB_HOST,
-#         'PORT': env_config.DB_PORT
-#         }
-#     }
 
 
 # Password validation
@@ -104,13 +90,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 
 # Default primary key field type
 
@@ -121,7 +105,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = BASE_DIR, 'static'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATIC_ROOT = '/home/georvxgp/immi.squaretechit.com/static'
 
 MEDIA_URL = '/media/'
@@ -150,3 +133,4 @@ EMAIL_HOST_USER = EnvConfig.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EnvConfig.EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = EnvConfig.EMAIL_USE_TLS
 EMAIL_USE_SSL = EnvConfig.EMAIL_USE_SSL
+
