@@ -11,7 +11,7 @@ class ImmiTheme:
         contex = {
             'notification': Notification.objects.all().order_by('-date')
         }
-        return render(self, 'theme/home.html', contex)
+        return render(self, 'home.html', contex)
     
     # Users Accommodation Page
     @login_required
@@ -19,7 +19,7 @@ class ImmiTheme:
         contex = {
             'notification': Notification.objects.all().order_by('-date')
         }
-        return render(self, 'dashboard/accommodation.html', contex)
+        return render(self, 'accommodation.html', contex)
 
     # Users Immigration Page
     @login_required
@@ -27,7 +27,7 @@ class ImmiTheme:
         contex = {
             'notification': Notification.objects.all().order_by('-date')
         }
-        return render(self, 'dashboard/immigration.html', contex)
+        return render(self, 'immigration.html', contex)
 
     # Covid Info Page
     @login_required
@@ -35,7 +35,7 @@ class ImmiTheme:
         contex = {
             'notification': Notification.objects.all().order_by('-date')
         }
-        return render(self, 'dashboard/covid-info.html', contex)
+        return render(self, 'covid-info.html', contex)
 
     # Notifications
     @login_required

@@ -25,7 +25,7 @@ class ImmiMessage:
                 'user_list': User.objects.exclude(username=self.user.username).all(),
                 'notification': Notification.objects.all().order_by('-date')
             }
-        return render(self, 'message/message.html', contex)
+        return render(self, 'message.html', contex)
 
     # Single Message Page
     @login_required
@@ -50,7 +50,7 @@ class ImmiMessage:
                     'current_user_info': get_object_or_404(User, username=receiver),
                     'notification': Notification.objects.all().order_by('-date')
                 }
-        return render(self, 'message/singlemessage.html', contex)
+        return render(self, 'singlemessage.html', contex)
 
     # Send All Message
     @login_required
@@ -114,7 +114,7 @@ class ImmiMessage:
                     'user_list': User.objects.exclude(username=self.user.username).all(),
                     'notification': Notification.objects.all().order_by('-date')
                 }
-        return render(self, 'message/groupmessage.html', contex)
+        return render(self, 'groupmessage.html', contex)
 
     # Group Message
     @login_required
@@ -139,4 +139,4 @@ class ImmiMessage:
                     'current_groups_info': find_group,
                     'notification': Notification.objects.all().order_by('-date')
                 }
-        return render(self, 'message/groupmessagebox.html', contex)
+        return render(self, 'groupmessagebox.html', contex)

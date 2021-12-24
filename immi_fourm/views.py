@@ -27,7 +27,7 @@ class ImmiForum:
                     'new_post_form': SinglePostForm(),
                     'search': SearchForm()
                 }
-                return render(self, 'forum/search.html', contex)
+                return render(self, 'search.html', contex)
             contex = {
                 'new_post_form': SinglePostForm(),
                 'search': SearchForm(self.POST),
@@ -55,7 +55,7 @@ class ImmiForum:
                 'new_post_form': SinglePostForm(),
                 'notification': Notification.objects.all().order_by('-date').order_by('-date')
             }
-        return render(self, 'forum/forum.html', contex)
+        return render(self, 'forum.html', contex)
 
     # Post Likes
     @login_required
@@ -105,7 +105,7 @@ class ImmiForum:
             'new_post_form': SinglePostForm(),
             'notification': Notification.objects.all().order_by('-date')
         }
-        return render(self, 'forum/all-my-post.html', contex)
+        return render(self, 'all-my-post.html', contex)
 
     # Delete Single Post
     @login_required
@@ -145,7 +145,7 @@ class ImmiForum:
                     'new_post_form': SinglePostForm(),
                     'notification': Notification.objects.all().order_by('-date')
                 }
-            return render(self, 'forum/edit-single-post.html', contex)
+            return render(self, 'edit-single-post.html', contex)
         else:
             messages.error(self, 'Your have access only for these posts.')
             return redirect('all-post-user')
@@ -177,4 +177,4 @@ class ImmiForum:
                 'bookmarks': AllBookmark.objects.filter(user=self.user),
                 'notification': Notification.objects.all().order_by('-date')
             }
-            return render(self, 'forum/bookmarks.html', contex)
+            return render(self, 'bookmarks.html', contex)

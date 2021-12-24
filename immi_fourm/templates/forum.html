@@ -1,20 +1,20 @@
-{% extends 'forum/forumbase.html' %}
+{% extends 'forumbase.html' %}
 {% load static %}
-{% block title %}All Bookmarks{% endblock %}
+{% block title %}All Forum{% endblock %}
 {% block forum %}
 <!-- All Posts -->
 <div class="col-md-6">
-    {% for post in bookmarks %}
+    {% for post in posts %}
         <div class="main-forum-back">
             <div class="card forum-card py-4 ps-4 pe-4 mt-5">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex">
                         <div class="post-head-img">
-                            <img src="{{ post.blogs.user.userinfo.profilepic.url }}" alt="{{ post.blogs.user.username }}">
+                            <img src="{{ post.user.userinfo.profilepic.url }}" alt="{{ post.user.username }}">
                         </div>
                         <div class="author-details ms-3">
-                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.blogs.user.first_name }} {{ post.blogs.user.last_name }}</small></p>
-                            <p class="mb-0"><small class="text-muted">{{ post.blogs.post_date }}</small></p>
+                            <p class="mb-0"><small class="text-muted text-capitalize">{{ post.user.first_name }} {{ post.user.last_name }}</small></p>
+                            <p class="mb-0"><small class="text-muted">{{ post.post_date }}</small></p>
                         </div>
                     </div>
                     <div class="all-tags">
@@ -24,35 +24,35 @@
                         </div>
                     </div>
                 </div>
-                <p class="fs-5 my-3 long-post-title">{{ post.blogs.title }}</p>
-                <p class="card-text text-justify long-post-discription">{{ post.blogs.post_description }}</p>
+                <p class="fs-5 my-3 long-post-title">{{ post.title }}</p>
+                <p class="card-text text-justify long-post-discription">{{ post.post_description }}</p>
                 <div class="d-flex justify-content-between">
                     <div class="like-users-pics d-flex">
-                        {% for pics in post.blogs.like.all|slice:3 %}
+                        {% for pics in post.like.all|slice:3 %}
                             <div class="single-like-user-pic">
                                 <img src="{{ pics.userinfo.profilepic.url }}" alt="{{ pics.username }}">
                             </div>
                         {% endfor %}
                         <div class="single-like-user-pic single-like-user-pic-value">
-                            <span class="ps-1">+{{ post.blogs.like.all.count }}</span>
+                            <span class="ps-1">+{{ post.like.all.count }}</span>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="d-flex align-items-center like post-like"
-                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.blogs.id }}">
+                            post-like-url="{% url 'users_likes' %}" post-id="{{ post.id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                             </svg>
-                            <span class="ms-2 like-count">{{ post.blogs.total_likes.count }}</span>
+                            <span class="ms-2 like-count">{{ post.total_likes.count }}</span>
                         </div>
-                        <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.blogs.id }}"
+                        <div class="ms-5 d-flex align-items-center post-comment" post-id="{{ post.id }}"
                             post-url="{{ post.post_url }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
                                 <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
                             </svg>
-                            <span class="ms-2 total-comment-count">{{ post.blogs.forum_comments.count }}</span>
+                            <span class="ms-2 total-comment-count">{{ post.forum_comments.count }}</span>
                         </div>
-                        <div class="ms-5 move-to-bookmarks" post-bookmark-url="{% url 'bookmarks' %}" post-id="{{ post.blogs.id }}">
+                        <div class="ms-5 move-to-bookmarks" post-bookmark-url="{% url 'bookmarks' %}" post-id="{{ post.id }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                                 <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
                             </svg>
@@ -69,12 +69,12 @@
             <div class="total-comment-history py-3">
                 <div class="d-flex justify-content-between ps-3 pe-3">
                     <input type="text" placeholder="Add A Comment" class="form-control comment-input">
-                    <button type="button" class="btn comment-btn" comment-id="{{ post.blogs.id }}"
+                    <button type="button" class="btn comment-btn" comment-id="{{ post.id }}"
                         comment-url="{% url 'users_comments' %}">Add Comment</button>
                 </div>
 
                 <div class="all-comments mt-3" id="all-comments-id">
-                    {% for single_comment in post.blogs.forum_comments.all|dictsortreversed:'comment_date' %}
+                    {% for single_comment in post.forum_comments.all|dictsortreversed:'comment_date' %}
                         <div class="comment py-3 ps-5 pe-5">
                             <div class="d-flex">
                                 <div class="post-head-img">

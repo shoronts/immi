@@ -59,8 +59,8 @@ class ImmiUserAuth:
                         settings.EMAIL_HOST_USER,
                         [email],
                     )
-                # main_email.attach_alternative(final_email, "text/html")
-                # main_email.send()
+                main_email.attach_alternative(final_email, "text/html")
+                main_email.send()
                 create_account_notification = Notification(
                     name='Create Account Notification',
                     user=user_name,
