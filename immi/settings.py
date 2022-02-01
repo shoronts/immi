@@ -3,7 +3,7 @@ from env import *
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-c@j0d!3(k9#=-km%18h4$3$^z(i7%@c7yy$2e+6!whu@j456qk'
+SECRET_KEY = 'seerequirments'
 
 DEBUG = EnvConfig.DEBUG
 ALLOWED_HOSTS = EnvConfig.ALLOWED_HOSTS
