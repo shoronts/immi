@@ -1,8 +1,6 @@
+# SECRET_KEY = 'django-insecure-c@j0d!3(k9#=-km%18h4$3$^z(i7%@c7yy$2e+6!whu@j456qk'
 Django==3.2.5               # Have to match the version
 pillow                      # Pillow==8.2.0
 six                         # six==1.16.0
 django-ckeditor             # django-ckeditor==6.1.0
 -U channels                 # have to use -U
-
-
-# SECRET_KEY = 'django-insecure-c@j0d!3(k9#=-km%18h4$3$^z(i7%@c7yy$2e+6!whu@j456qk'
